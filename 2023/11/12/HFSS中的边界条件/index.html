@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 8.1.1">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/stpguy/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/stpguy/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/stpguy/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/stpguy/images/logo.svg" color="#222">
+  <link rel="manifest" href="/stpguy/manifest.json">
+
+<link rel="stylesheet" href="/stpguy/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"stpguy.github.io","root":"/stpguy/","images":"/stpguy/images","scheme":"Gemini","darkmode":true,"version":"8.27.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":true,"style":null},"fold":{"enable":true,"height":200},"language":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/stpguy/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/stpguy/js/config.js" defer></script>
+
+    <meta name="description" content="HFSS中的建模操作">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="HFSS中的边界条件">
+<meta property="og:url" content="https://stpguy.github.io/stpguy/2023/11/12/HFSS%E4%B8%AD%E7%9A%84%E8%BE%B9%E7%95%8C%E6%9D%A1%E4%BB%B6/index.html">
+<meta property="og:site_name" content="Monique&#39;s Blog">
+<meta property="og:description" content="HFSS中的建模操作">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://stpguy.github.io/stpguy/2023/11/12/HFSS%E4%B8%AD%E7%9A%84%E8%BE%B9%E7%95%8C%E6%9D%A1%E4%BB%B6/image-20231112203416703.png">
+<meta property="article:published_time" content="2023-11-12T12:16:22.000Z">
+<meta property="article:modified_time" content="2023-11-28T00:55:34.000Z">
+<meta property="article:author" content="Monique">
+<meta property="article:tag" content="HFSS入门">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://stpguy.github.io/stpguy/2023/11/12/HFSS%E4%B8%AD%E7%9A%84%E8%BE%B9%E7%95%8C%E6%9D%A1%E4%BB%B6/image-20231112203416703.png">
+
+
+<link rel="canonical" href="https://stpguy.github.io/stpguy/2023/11/12/HFSS%E4%B8%AD%E7%9A%84%E8%BE%B9%E7%95%8C%E6%9D%A1%E4%BB%B6/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://stpguy.github.io/stpguy/2023/11/12/HFSS%E4%B8%AD%E7%9A%84%E8%BE%B9%E7%95%8C%E6%9D%A1%E4%BB%B6/","path":"2023/11/12/HFSS中的边界条件/","title":"HFSS中的边界条件"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>HFSS中的边界条件 | Monique's Blog</title>
+  
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous" defer></script>
+<script src="/stpguy/js/utils.js" defer></script><script src="/stpguy/js/motion.js" defer></script><script src="/stpguy/js/sidebar.js" defer></script><script src="/stpguy/js/next-boot.js" defer></script><script src="/stpguy/js/bookmark.js" defer></script><script src="/stpguy/js/pjax.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/stpguy/js/third-party/search/local-search.js" defer></script>
+
+  <script class="next-config" data-name="pdf" type="application/json">{"object_url":{"url":"https://cdnjs.cloudflare.com/ajax/libs/pdfobject/2.3.1/pdfobject.min.js","integrity":"sha256-jI72I8ZLVflVOisZIOaLvRew3tyvzeu6aZXFm7P7dEo="},"url":"/stpguy/lib/pdf/web/viewer.html"}</script>
+  <script src="/stpguy/js/third-party/tags/pdf.js" defer></script>
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css" integrity="sha256-UF1fgpAiu3tPJN/uCqEUHNe7pnr+QR0SQDNfgglgtcM=" crossorigin="anonymous">
+  <script class="next-config" data-name="katex" type="application/json">{"copy_tex_js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/contrib/copy-tex.min.js","integrity":"sha256-Us54+rSGDSTvIhKKUs4kygE2ipA0RXpWWh0/zLqw3bs="}}</script>
+  <script src="/stpguy/js/third-party/math/katex.js" defer></script>
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/3.0.1/quicklink.umd.js" integrity="sha256-44BednzIpUeQJcY8qtLyarFu0UCCTbgmWOvaoehiFQQ=" crossorigin="anonymous" defer></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"https://stpguy.github.io/stpguy/2023/11/12/HFSS%E4%B8%AD%E7%9A%84%E8%BE%B9%E7%95%8C%E6%9D%A1%E4%BB%B6/"}</script>
+  <script src="/stpguy/js/third-party/quicklink.js" defer></script>
+
+  <noscript>
+    <link rel="stylesheet" href="/stpguy/css/noscript.css">
+  </noscript>
+<style type="text/css">
+.spoiler {
+  display: inline;
+}
+p.spoiler {
+  display: flex;
+}
+.spoiler a {
+  pointer-events: none;
+}
+.spoiler-blur, .spoiler-blur > * {
+  transition: text-shadow .5s ease;
+}
+.spoiler .spoiler-blur, .spoiler .spoiler-blur > * {
+  color: rgba(0, 0, 0, 0);
+  background-color: rgba(0, 0, 0, 0);
+  text-shadow: 0 0 10px grey;
+  cursor: pointer;
+}
+.spoiler .spoiler-blur:hover, .spoiler .spoiler-blur:hover > * {
+  text-shadow: 0 0 5px grey;
+}
+.spoiler-box, .spoiler-box > * {
+  transition: color .5s ease,
+  background-color .5s ease;
+}
+.spoiler .spoiler-box, .spoiler .spoiler-box > * {
+  color: black;
+  background-color: black;
+  text-shadow: none;
+}</style></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/stpguy/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Monique's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">A long way to go</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/stpguy/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/stpguy/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">71</span></a></li><li class="menu-item menu-item-archives"><a href="/stpguy/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">126</span></a></li><li class="menu-item menu-item-schedule"><a href="/stpguy/schedule/" rel="section"><i class="fa fa-calendar fa-fw"></i>Schedule</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="Searching..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%B3%E4%BA%8E%E8%BE%B9%E7%95%8C%E6%9D%A1%E4%BB%B6"><span class="nav-number">1.</span> <span class="nav-text"> 关于边界条件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%B0%83%E6%95%B4%E8%BE%B9%E7%95%8C%E6%9D%A1%E4%BB%B6%E7%9A%84%E4%BC%98%E5%85%88%E7%BA%A7"><span class="nav-number">2.</span> <span class="nav-text"> 调整边界条件的优先级</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%BE%B9%E7%95%8C%E6%9D%A1%E4%BB%B6%E7%9A%84%E8%AF%A6%E7%BB%86%E8%AF%B4%E6%98%8E"><span class="nav-number">3.</span> <span class="nav-text"> 边界条件的详细说明</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E7%90%86%E6%83%B3%E5%AF%BC%E4%BD%93%E8%BE%B9%E7%95%8C%E6%9D%A1%E4%BB%B6-textperfect-e"><span class="nav-number">3.1.</span> <span class="nav-text"> 1. 理想导体边界条件 Perfect E\text{Perfect E}Perfect E</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E7%90%86%E6%83%B3%E7%A3%81%E8%BE%B9%E7%95%8C%E6%9D%A1%E4%BB%B6-textperfect-h"><span class="nav-number">3.2.</span> <span class="nav-text"> 2. 理想磁边界条件 Perfect H\text{Perfect H}Perfect H</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E6%9C%89%E9%99%90%E5%AF%BC%E4%BD%93%E8%BE%B9%E7%95%8C%E6%9D%A1%E4%BB%B6-textfinite-conductivity"><span class="nav-number">3.3.</span> <span class="nav-text"> 3. 有限导体边界条件 Finite Conductivity\text{Finite Conductivity}Finite Conductivity</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-%E8%BE%90%E5%B0%84%E8%BE%B9%E7%95%8C%E6%9D%A1%E4%BB%B6-textradiation"><span class="nav-number">3.4.</span> <span class="nav-text"> 4. 辐射边界条件 Radiation\text{Radiation}Radiation</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5%E5%AF%B9%E7%A7%B0%E8%BE%B9%E7%95%8C%E6%9D%A1%E4%BB%B6-textsymmetry"><span class="nav-number">3.5.</span> <span class="nav-text"> 5.对称边界条件 Symmetry\text{Symmetry}Symmetry</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-%E9%98%BB%E6%8A%97%E8%BE%B9%E7%95%8C%E6%9D%A1%E4%BB%B6-textimpedance"><span class="nav-number">3.6.</span> <span class="nav-text"> 6. 阻抗边界条件 Impedance\text{Impedance}Impedance</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-%E9%9B%86%E6%80%BB-textrlc-%E8%BE%B9%E7%95%8C%E6%9D%A1%E4%BB%B6-textlumped-rlc"><span class="nav-number">3.7.</span> <span class="nav-text"> 7. 集总 RLC\text{RLC}RLC 边界条件 Lumped RLC\text{Lumped RLC}Lumped RLC</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-%E5%88%86%E5%B1%82%E9%98%BB%E6%8A%97%E8%BE%B9%E7%95%8C%E6%9D%A1%E4%BB%B6-textlayered-impedance"><span class="nav-number">3.8.</span> <span class="nav-text"> 8. 分层阻抗边界条件  Layered Impedance\text{Layered Impedance}Layered Impedance</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-%E6%97%A0%E9%99%90%E5%A4%A7%E5%9C%B0%E5%B9%B3%E9%9D%A2-textinfinite-ground-plane"><span class="nav-number">3.9.</span> <span class="nav-text"> 9. 无限大地平面 Infinite Ground Plane\text{Infinite Ground Plane}Infinite Ground Plane</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#10-%E4%B8%BB%E4%BB%8E%E8%BE%B9%E7%95%8C%E6%9D%A1%E4%BB%B6-textmaster-and-slave"><span class="nav-number">3.10.</span> <span class="nav-text"> 10. 主从边界条件 Master and Slave\text{Master and Slave}Master and Slave</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#11-%E7%90%86%E6%83%B3%E5%8C%B9%E9%85%8D%E5%B1%82-textpml"><span class="nav-number">3.11.</span> <span class="nav-text"> 11. 理想匹配层  PML\text{PML}PML</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#12-textfe-bi"><span class="nav-number">3.12.</span> <span class="nav-text"> 12. FE-BI\text{FE-BI}FE-BI</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Monique"
+      src="/stpguy/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Monique</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/stpguy/archives/">
+          <span class="site-state-item-count">126</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/stpguy/tags/">
+        <span class="site-state-item-count">71</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/stpguy" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;stpguy" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="gmail:stpguylee@gmail.com" title="E-Mail → gmail:stpguylee@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://stpguy.github.io/stpguy/2023/11/12/HFSS%E4%B8%AD%E7%9A%84%E8%BE%B9%E7%95%8C%E6%9D%A1%E4%BB%B6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/stpguy/images/avatar.jpg">
+      <meta itemprop="name" content="Monique">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Monique's Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="HFSS中的边界条件 | Monique's Blog">
+      <meta itemprop="description" content="HFSS中的建模操作">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          HFSS中的边界条件
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2023-11-12 20:16:22" itemprop="dateCreated datePublished" datetime="2023-11-12T20:16:22+08:00">2023-11-12</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-11-28 08:55:34" itemprop="dateModified" datetime="2023-11-28T08:55:34+08:00">2023-11-28</time>
+    </span>
+
+  
+</div>
+
+            <div class="post-description">HFSS中的建模操作</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="关于边界条件"><a class="markdownIt-Anchor" href="#关于边界条件"></a> 关于边界条件</h1>
+<p>在电磁场理论学习中我们知道，电磁场问题的求解都归结于麦克斯韦 (<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>Maxwell</mtext></mrow><annotation encoding="application/x-tex">\text{Maxwell}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord text"><span class="mord">Maxwell</span></span></span></span></span>) 方程组的求解在 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>HFSS</mtext></mrow><annotation encoding="application/x-tex">\text{HFSS}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord text"><span class="mord">HFSS</span></span></span></span></span> 中波动方程的求解同样是由微分形式的麦克斯韦方程推导出来的。而边界条件定义了求解区域的边界以及不同物体交界处的电磁场特性，是求解麦克斯韦方程的基础。<br />
+只有在假定场矢量是单值、有界、并且沿空间连续分布的前提下，微分形式的麦克斯韦方程组才是有效的；而在求解区域的边界、不同介质的交界处私场源处，场矢量是不连续的，那么场的导数也就失去了意义。边界条件就是定义跨越不连续边界处的电磁场的特性，因此，正确地理解、定义并设置边界条件，是正确使用 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>HFSS</mtext></mrow><annotation encoding="application/x-tex">\text{HFSS}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord text"><span class="mord">HFSS</span></span></span></span></span> 仿真分析电磁场场特性的前提。<br />
+使用 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>HFSS</mtext></mrow><annotation encoding="application/x-tex">\text{HFSS}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord text"><span class="mord">HFSS</span></span></span></span></span> 时，用户应该时刻意识到: 边界条件确定场。正确地使用边界条件，是<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>HFSS</mtext></mrow><annotation encoding="application/x-tex">\text{HFSS}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord text"><span class="mord">HFSS</span></span></span></span></span>能够仿真分析出准确结果的前提。</p>
+<h1 id="调整边界条件的优先级"><a class="markdownIt-Anchor" href="#调整边界条件的优先级"></a> 调整边界条件的优先级</h1>
+<p><img src="./image-20231112203416703.png" alt="image-20231112203416703" /></p>
+<h1 id="边界条件的详细说明"><a class="markdownIt-Anchor" href="#边界条件的详细说明"></a> 边界条件的详细说明</h1>
+<p>在<a target="_blank" rel="noopener" href="https://alanturingli.gitee.io/alanturingli/2023/11/06/HFSS%E5%8A%9F%E8%83%BD%E6%A6%82%E8%BF%B0/">这篇</a> <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>Blog</mtext></mrow><annotation encoding="application/x-tex">\text{Blog}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord text"><span class="mord">Blog</span></span></span></span></span> 中有简单提到边界条件的大致使用，这里详细展开说明一下。</p>
+<h2 id="1-理想导体边界条件-textperfect-e"><a class="markdownIt-Anchor" href="#1-理想导体边界条件-textperfect-e"></a> 1. 理想导体边界条件 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>Perfect E</mtext></mrow><annotation encoding="application/x-tex">\text{Perfect E}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord text"><span class="mord">Perfect E</span></span></span></span></span></h2>
+<p><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>Perfect E</mtext></mrow><annotation encoding="application/x-tex">\text{Perfect E}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord text"><span class="mord">Perfect E</span></span></span></span></span> 是一种理想电导体或简称为理想导体边界条件。这种边界条件的电场垂直于表面。有两种边界被自动设为理想导体边界条件：</p>
+<ul>
+<li>
+<p>任何与背景相关联的物体表面将被自动定义为理想导体边界，并命名为 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>outer</mtext></mrow><annotation encoding="application/x-tex">\text{outer}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.61508em;vertical-align:0em;"></span><span class="mord text"><span class="mord">outer</span></span></span></span></span> 边界</p>
+</li>
+<li>
+<p>材料设为 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>PEC</mtext></mrow><annotation encoding="application/x-tex">\text{PEC}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord text"><span class="mord">PEC</span></span></span></span></span>(理想电导体)的物体表面被自动定为理想导体边界，并命名为 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>smental</mtext></mrow><annotation encoding="application/x-tex">\text{smental}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord text"><span class="mord">smental</span></span></span></span></span></p>
+</li>
+</ul>
+<blockquote>
+<p>背景结构说明：</p>
+<p>所谓背景是指几何模型周围没有被任何物体占据的空间，任何与背景有关联的物体表面被自动定义为理想导体边界，并命名为外部 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>(Outer)</mtext></mrow><annotation encoding="application/x-tex">\text{(Outer)}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord text"><span class="mord">(Outer)</span></span></span></span></span> 边界条件。</p>
+<p>我们可以把几何结构想象为外面有一层很道而且是理想导体的材料，如之前创建的波导。</p>
+<p>如有必要，也可以改变背景的边界条件，使其性质与理想导体边界条件不同</p>
+</blockquote>
+<h2 id="2-理想磁边界条件-textperfect-h"><a class="markdownIt-Anchor" href="#2-理想磁边界条件-textperfect-h"></a> 2. 理想磁边界条件 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>Perfect H</mtext></mrow><annotation encoding="application/x-tex">\text{Perfect H}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord text"><span class="mord">Perfect H</span></span></span></span></span></h2>
+<p><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>Perfect H</mtext></mrow><annotation encoding="application/x-tex">\text{Perfect H}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord text"><span class="mord">Perfect H</span></span></span></span></span> 是一种理想的磁边界，这种边界条件上的电场方向与表面相切，磁场与表面垂直，真实世界中不存在理想磁边界，它只是理论上的约束条件。</p>
+<blockquote>
+<p>自然边界 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>(Natural)</mtext></mrow><annotation encoding="application/x-tex">\text{(Natural)}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord text"><span class="mord">(Natural)</span></span></span></span></span> ：</p>
+<p>当理想导体边界和理想磁边界出现交叠时，理想磁边界也被称为自然 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>(Natural)</mtext></mrow><annotation encoding="application/x-tex">\text{(Natural)}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord text"><span class="mord">(Natural)</span></span></span></span></span> 边界</p>
+<p>背景设置成 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>Perfect H</mtext></mrow><annotation encoding="application/x-tex">\text{Perfect H}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord text"><span class="mord">Perfect H</span></span></span></span></span> 边界条件，可以模拟开放的自由空间</p>
+<p>在理想导体边界上叠加理想磁边界将去掉理想导体边界的特性，相当于在理想导体表面开个口，允许电场穿过</p>
+</blockquote>
+<h2 id="3-有限导体边界条件-textfinite-conductivity"><a class="markdownIt-Anchor" href="#3-有限导体边界条件-textfinite-conductivity"></a> 3. 有限导体边界条件 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>Finite Conductivity</mtext></mrow><annotation encoding="application/x-tex">\text{Finite Conductivity}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord text"><span class="mord">Finite Conductivity</span></span></span></span></span></h2>
+<p>有耗导体 / 非理想导体边界条件，电场垂直于物体表面，有限导体边界只在良导体模型下是有效的，即在给定的频率范围内，导体的厚度远远大于趋肤深度。需要设置的参数：导电率和导磁率。</p>
+<h2 id="4-辐射边界条件-textradiation"><a class="markdownIt-Anchor" href="#4-辐射边界条件-textradiation"></a> 4. 辐射边界条件 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>Radiation</mtext></mrow><annotation encoding="application/x-tex">\text{Radiation}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord text"><span class="mord">Radiation</span></span></span></span></span></h2>
+<p>辐射边界也称为吸收边界 (<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>Absorbing Boundary Condition</mtext></mrow><annotation encoding="application/x-tex">\text{Absorbing Boundary Condition}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord text"><span class="mord">Absorbing Boundary Condition</span></span></span></span></span>)，简称 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>ABC</mtext></mrow><annotation encoding="application/x-tex">\text{ABC}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord text"><span class="mord">ABC</span></span></span></span></span> ，用以模拟开放的自由空间，模拟波辐射到空间的无限远处的情况，常用于天线问题的分析。</p>
+<ul>
+<li>当结构中包含辐射边界条件时，<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>HFSS</mtext></mrow><annotation encoding="application/x-tex">\text{HFSS}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord text"><span class="mord">HFSS</span></span></span></span></span> 会自动计算结构的远区场。</li>
+<li><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>Perfect H</mtext></mrow><annotation encoding="application/x-tex">\text{Perfect H}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord text"><span class="mord">Perfect H</span></span></span></span></span> 边界条件也可以模拟开放空间的情况，但该边界条件不计算远区场。</li>
+<li>辐射边界条件是自由空间的近似，这种近似的准确程度取决于波的传播方向与辐射边界之间的角度，以及辐射源与边界之间的距离：
+<ul>
+<li>可以是任意形状</li>
+<li>辐射边界在各个方向上距离辐射体一般不小于 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>λ</mi><mi mathvariant="normal">/</mi><mn>4</mn></mrow><annotation encoding="application/x-tex">\lambda/4</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal">λ</span><span class="mord">/</span><span class="mord">4</span></span></span></span></li>
+<li>入射能量和辐射边界表面正交时，计算结果最准确</li>
+</ul>
+</li>
+</ul>
+<h2 id="5对称边界条件-textsymmetry"><a class="markdownIt-Anchor" href="#5对称边界条件-textsymmetry"></a> 5.对称边界条件 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>Symmetry</mtext></mrow><annotation encoding="application/x-tex">\text{Symmetry}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8777699999999999em;vertical-align:-0.19444em;"></span><span class="mord text"><span class="mord">Symmetry</span></span></span></span></span></h2>
+<p>模拟理想电壁或理想磁壁对称面，应用对称边界可以在构造结构时仅构造一部分，减小结构的尺寸和设计复杂性，缩短计算时间。</p>
+<ul>
+<li>定义对称平面时，要遵循以下原则:
+<ul>
+<li>对称平面必须暴露在背景中；</li>
+<li>对称面必须定义在平面表面上，不能定义在曲面上；</li>
+<li>在一个问题上最多只能定义三个正交对称面。</li>
+</ul>
+</li>
+<li>决定对称面的类型
+<ul>
+<li>如果电场垂直于对称面且对称，使用理想电壁对称面；</li>
+<li>如果磁场垂直于对称面且对称，使用理想磁壁对称面。</li>
+</ul>
+</li>
+<li>特性阻抗的计算：
+<ul>
+<li><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>Z</mi><mrow><mi mathvariant="normal">p</mi><mi mathvariant="normal">i</mi></mrow></msub><mo>=</mo><mfrac><mi>p</mi><msup><mi>I</mi><mn>2</mn></msup></mfrac></mrow><annotation encoding="application/x-tex">Z_{\mathrm{pi}}=\frac{p}{I^2}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.969438em;vertical-align:-0.286108em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.07153em;">Z</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.317502em;"><span style="top:-2.5500000000000003em;margin-left:-0.07153em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathrm mtight">p</span><span class="mord mathrm mtight">i</span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1.0925em;vertical-align:-0.345em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.7475em;"><span style="top:-2.6550000000000002em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.07847em;">I</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.7463142857142857em;"><span style="top:-2.786em;margin-right:0.07142857142857144em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.446108em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">p</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.345em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span>  ，适合微带线模型</li>
+<li><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>Z</mi><mrow><mi mathvariant="normal">p</mi><mi mathvariant="normal">u</mi></mrow></msub><mo>=</mo><mfrac><msup><mi>U</mi><mn>2</mn></msup><mi>P</mi></mfrac></mrow><annotation encoding="application/x-tex">Z_{\mathrm{pu}} = \frac{U^2}P</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.969438em;vertical-align:-0.286108em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.07153em;">Z</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.15139200000000003em;"><span style="top:-2.5500000000000003em;margin-left:-0.07153em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathrm mtight">p</span><span class="mord mathrm mtight">u</span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1.36292em;vertical-align:-0.345em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.01792em;"><span style="top:-2.6550000000000002em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.13889em;">P</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.10903em;">U</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8913142857142857em;"><span style="top:-2.931em;margin-right:0.07142857142857144em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.345em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span> ，适合缝隙类结构</li>
+<li><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>Z</mi><mrow><mi mathvariant="normal">u</mi><mi mathvariant="normal">i</mi></mrow></msub><mo>=</mo><mfrac><mi>U</mi><mi>I</mi></mfrac></mrow><annotation encoding="application/x-tex">Z_{\mathrm{ui}}=\frac{U}{I}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.07153em;">Z</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31750199999999995em;"><span style="top:-2.5500000000000003em;margin-left:-0.07153em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathrm mtight">u</span><span class="mord mathrm mtight">i</span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1.217331em;vertical-align:-0.345em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.872331em;"><span style="top:-2.6550000000000002em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.07847em;">I</span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.10903em;">U</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.345em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span> ， 适合 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="normal">T</mi><mi mathvariant="normal">E</mi><mi mathvariant="normal">M</mi></mrow><annotation encoding="application/x-tex">\mathrm{TEM}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord"><span class="mord mathrm">T</span><span class="mord mathrm">E</span><span class="mord mathrm">M</span></span></span></span></span> 波</li>
+</ul>
+</li>
+<li>阻抗乘法器的定义
+<ul>
+<li>理想电壁对称面将结构分成两部分时，只有一半的电压值和一半的能量被计算，由 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>Z</mi><mrow><mi mathvariant="normal">p</mi><mi mathvariant="normal">u</mi></mrow></msub><mo>=</mo><msup><mi>U</mi><mn>2</mn></msup><mi mathvariant="normal">/</mi><mi>P</mi></mrow><annotation encoding="application/x-tex">Z_{\mathrm{pu}} = U^2/P</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.969438em;vertical-align:-0.286108em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.07153em;">Z</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.15139200000000003em;"><span style="top:-2.5500000000000003em;margin-left:-0.07153em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathrm mtight">p</span><span class="mord mathrm mtight">u</span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1.064108em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.10903em;">U</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mord">/</span><span class="mord mathnormal" style="margin-right:0.13889em;">P</span></span></span></span><br />
+计算出的阻抗也只有真实值的一半，所以需要定义 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>2</mn></mrow><annotation encoding="application/x-tex">2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">2</span></span></span></span> 倍的阻抗乘法器。</li>
+<li>理想磁壁对称面将结构分成两部分时，只有一半的能量被计算，而电压保持不变，由 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>Z</mi><mrow><mi mathvariant="normal">p</mi><mi mathvariant="normal">u</mi></mrow></msub><mo>=</mo><msup><mi>U</mi><mn>2</mn></msup><mi mathvariant="normal">/</mi><mi>P</mi></mrow><annotation encoding="application/x-tex">Z_{\mathrm{pu}} =U^2/P</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.969438em;vertical-align:-0.286108em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.07153em;">Z</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.15139200000000003em;"><span style="top:-2.5500000000000003em;margin-left:-0.07153em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathrm mtight">p</span><span class="mord mathrm mtight">u</span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1.064108em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.10903em;">U</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mord">/</span><span class="mord mathnormal" style="margin-right:0.13889em;">P</span></span></span></span> 计算出的阻抗是真实值的 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>2</mn></mrow><annotation encoding="application/x-tex">2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">2</span></span></span></span> 倍，所以需要定义 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>0.5</mn></mrow><annotation encoding="application/x-tex">0.5</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">0</span><span class="mord">.</span><span class="mord">5</span></span></span></span> 倍的阻抗乘法器。</li>
+</ul>
+</li>
+<li>阻抗乘法器的设置
+<ul>
+<li>在设置对称边界的弹出窗口中单击 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="normal">l</mi><mi mathvariant="normal">m</mi><mi mathvariant="normal">p</mi><mi mathvariant="normal">e</mi><mi mathvariant="normal">d</mi><mi mathvariant="normal">a</mi><mi mathvariant="normal">n</mi><mi mathvariant="normal">c</mi><mi mathvariant="normal">e</mi><mtext>  </mtext><mi mathvariant="normal">M</mi><mi mathvariant="normal">u</mi><mi mathvariant="normal">l</mi><mi mathvariant="normal">t</mi><mi mathvariant="normal">i</mi><mi mathvariant="normal">p</mi><mi mathvariant="normal">l</mi><mi mathvariant="normal">i</mi><mi mathvariant="normal">e</mi><mi mathvariant="normal">r</mi></mrow><annotation encoding="application/x-tex">\mathrm{lmpedance\;Multiplier}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord"><span class="mord mathrm">l</span><span class="mord mathrm">m</span><span class="mord mathrm">p</span><span class="mord mathrm">e</span><span class="mord mathrm">d</span><span class="mord mathrm">a</span><span class="mord mathrm">n</span><span class="mord mathrm">c</span><span class="mord mathrm">e</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mord mathrm">M</span><span class="mord mathrm">u</span><span class="mord mathrm">l</span><span class="mord mathrm">t</span><span class="mord mathrm">i</span><span class="mord mathrm">p</span><span class="mord mathrm">l</span><span class="mord mathrm">i</span><span class="mord mathrm">e</span><span class="mord mathrm">r</span></span></span></span></span> 。</li>
+</ul>
+</li>
+</ul>
+<h2 id="6-阻抗边界条件-textimpedance"><a class="markdownIt-Anchor" href="#6-阻抗边界条件-textimpedance"></a> 6. 阻抗边界条件 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>Impedance</mtext></mrow><annotation encoding="application/x-tex">\text{Impedance}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord text"><span class="mord">Impedance</span></span></span></span></span></h2>
+<p>用于模拟已知阻抗的边界表面,如薄膜电阻表面;表面的阻抗 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>Z</mi><mi mathvariant="normal">s</mi></msub><mo>=</mo><msub><mi>R</mi><mi mathvariant="normal">s</mi></msub><mo>+</mo><msub><mi>i</mi><mrow><mi mathvariant="normal">x</mi><mi mathvariant="normal">s</mi></mrow></msub></mrow><annotation encoding="application/x-tex">Z_{\mathrm s} = R_{\mathrm s} + i_{\mathrm{xs}}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.07153em;">Z</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:-0.07153em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathrm mtight">s</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.00773em;">R</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:-0.00773em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathrm mtight">s</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.80952em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">i</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathrm mtight">x</span><span class="mord mathrm mtight">s</span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>，其中 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>R</mi><mi>S</mi></msub></mrow><annotation encoding="application/x-tex">R_S</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.00773em;">R</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.00773em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.05764em;">S</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> 是以 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>Ohms/Square</mtext></mrow><annotation encoding="application/x-tex">\text{Ohms/Square}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord text"><span class="mord">Ohms/Square</span></span></span></span></span> 为单位的电阻， <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>X</mi><mi mathvariant="normal">s</mi></msub></mrow><annotation encoding="application/x-tex">X_{\mathrm s}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.07847em;">X</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:-0.07847em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathrm mtight">s</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>是以 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>Ohms/Square</mtext></mrow><annotation encoding="application/x-tex">\text{Ohms/Square}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord text"><span class="mord">Ohms/Square</span></span></span></span></span> 为单位的电抗。</p>
+<ul>
+<li>阻抗的计算：
+<ul>
+<li><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mrow><mtext>number</mtext><mtext>  </mtext><mtext>of</mtext><mtext>  </mtext><mtext>&quot;Square&quot; = Length (in direction of current flow) </mtext></mrow><mo>÷</mo><mtext>Width</mtext></mrow><annotation encoding="application/x-tex">\text{number\;of\;&quot;Square&quot; = Length (in direction of current flow) }\div\text{Width}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord text"><span class="mord">number</span><span class="mspace" style="margin-right:0.2777em;"></span><span class="mord">of</span><span class="mspace" style="margin-right:0.2777em;"></span><span class="mord">&quot;Square&quot; = Length (in direction of current flow) </span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">÷</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord text"><span class="mord">Width</span></span></span></span></span></li>
+<li><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>Impedance per Square = Desired Lumped Impedance</mtext><mo>÷</mo><mtext>number of squares</mtext></mrow><annotation encoding="application/x-tex">\text{Impedance per Square = Desired Lumped Impedance}\div\text{number of squares}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord text"><span class="mord">Impedance per Square = Desired Lumped Impedance</span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">÷</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord text"><span class="mord">number of squares</span></span></span></span></span></li>
+</ul>
+</li>
+<li>故需要手动设置以 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>Ohms/Square</mtext></mrow><annotation encoding="application/x-tex">\text{Ohms/Square}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord text"><span class="mord">Ohms/Square</span></span></span></span></span> 为单位的电阻 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>R</mi><mi mathvariant="normal">s</mi></msub></mrow><annotation encoding="application/x-tex">R_{\mathrm s}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.00773em;">R</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:-0.00773em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathrm mtight">s</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> 和电抗 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>X</mi><mi mathvariant="normal">s</mi></msub></mrow><annotation encoding="application/x-tex">X_{\mathrm s}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.07847em;">X</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:-0.07847em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathrm mtight">s</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> 。</li>
+</ul>
+<h2 id="7-集总-textrlc-边界条件-textlumped-rlc"><a class="markdownIt-Anchor" href="#7-集总-textrlc-边界条件-textlumped-rlc"></a> 7. 集总 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>RLC</mtext></mrow><annotation encoding="application/x-tex">\text{RLC}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord text"><span class="mord">RLC</span></span></span></span></span> 边界条件 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>Lumped RLC</mtext></mrow><annotation encoding="application/x-tex">\text{Lumped RLC}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord text"><span class="mord">Lumped RLC</span></span></span></span></span></h2>
+<p>类似于阻抗边界条件，利用用户提供的 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>R</mi><mtext>、</mtext><mi>L</mi><mtext>、</mtext><mi>C</mi></mrow><annotation encoding="application/x-tex">R、L、C</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.00773em;">R</span><span class="mord cjk_fallback">、</span><span class="mord mathnormal">L</span><span class="mord cjk_fallback">、</span><span class="mord mathnormal" style="margin-right:0.07153em;">C</span></span></span></span>值计算出以 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>Ohms/Square</mtext></mrow><annotation encoding="application/x-tex">\text{Ohms/Square}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord text"><span class="mord">Ohms/Square</span></span></span></span></span> 为单位的阻抗值。</p>
+<p>与阻抗边界不同的是，集总 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>RLC</mtext></mrow><annotation encoding="application/x-tex">\text{RLC}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord text"><span class="mord">RLC</span></span></span></span></span> 边界不需要提供以 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>Ohms/Square</mtext></mrow><annotation encoding="application/x-tex">\text{Ohms/Square}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord text"><span class="mord">Ohms/Square</span></span></span></span></span> 为单位的电阻和电抗，而是要给出 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>R</mi><mtext>、</mtext><mi>L</mi><mtext>、</mtext><mi>C</mi></mrow><annotation encoding="application/x-tex">R、L、C</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.00773em;">R</span><span class="mord cjk_fallback">、</span><span class="mord mathnormal">L</span><span class="mord cjk_fallback">、</span><span class="mord mathnormal" style="margin-right:0.07153em;">C</span></span></span></span> 的真实值；之后，<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>HFSS</mtext></mrow><annotation encoding="application/x-tex">\text{HFSS}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord text"><span class="mord">HFSS</span></span></span></span></span> 就能确定任意频率下集总 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>RLC</mtext></mrow><annotation encoding="application/x-tex">\text{RLC}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord text"><span class="mord">RLC</span></span></span></span></span> 边界以 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>Ohms/Square</mtext></mrow><annotation encoding="application/x-tex">\text{Ohms/Square}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord text"><span class="mord">Ohms/Square</span></span></span></span></span> 为单位的阻抗。</p>
+<h2 id="8-分层阻抗边界条件-textlayered-impedance"><a class="markdownIt-Anchor" href="#8-分层阻抗边界条件-textlayered-impedance"></a> 8. 分层阻抗边界条件  <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>Layered Impedance</mtext></mrow><annotation encoding="application/x-tex">\text{Layered Impedance}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord text"><span class="mord">Layered Impedance</span></span></span></span></span></h2>
+<p>分层阻抗边界条件是用多层结构将物体表面模拟为一个阻抗表面，其效果与阻抗边界条件相同；与阻抗边界条件不同的是，对于分层阻抗边界条件，<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>HFSS</mtext></mrow><annotation encoding="application/x-tex">\text{HFSS}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord text"><span class="mord">HFSS</span></span></span></span></span> 是根据输入的分层结构数据和表面粗糙度来计算表面电阻和表面电抗的，且不支持快速扫频。</p>
+<h2 id="9-无限大地平面-textinfinite-ground-plane"><a class="markdownIt-Anchor" href="#9-无限大地平面-textinfinite-ground-plane"></a> 9. 无限大地平面 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>Infinite Ground Plane</mtext></mrow><annotation encoding="application/x-tex">\text{Infinite Ground Plane}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord text"><span class="mord">Infinite Ground Plane</span></span></span></span></span></h2>
+<p>将有限大的边界表面模拟成无限大地平面的作用，设置无限大平面边界后，在后续处理中会影响近区、远区辐射场的计算。</p>
+<ul>
+<li>无限大平面边界的设置:在设置理想导体边界、有限导体边界或阻抗边界时选中 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>Infinite Ground Plane</mtext></mrow><annotation encoding="application/x-tex">\text{Infinite Ground Plane}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord text"><span class="mord">Infinite Ground Plane</span></span></span></span></span>；</li>
+<li>定义无限大地平面时，需要满足以下条件：
+<ul>
+<li>无限大地平面必须暴露在背景上；</li>
+<li>无限大地平面必须定义在平面上；</li>
+<li>无限大地平面和对称面的总数不能超过 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>3</mn></mrow><annotation encoding="application/x-tex">3</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">3</span></span></span></span> 个；</li>
+<li>所有无限大地平面和对称面必须正交。</li>
+</ul>
+</li>
+</ul>
+<h2 id="10-主从边界条件-textmaster-and-slave"><a class="markdownIt-Anchor" href="#10-主从边界条件-textmaster-and-slave"></a> 10. 主从边界条件 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>Master and Slave</mtext></mrow><annotation encoding="application/x-tex">\text{Master and Slave}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord text"><span class="mord">Master and Slave</span></span></span></span></span></h2>
+<p>主从边界条件也称为关联边界条件 (<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>Linked Boundary Condition</mtext></mrow><annotation encoding="application/x-tex">\text{Linked Boundary Condition}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord text"><span class="mord">Linked Boundary Condition</span></span></span></span></span>，简称 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>LBC</mtext></mrow><annotation encoding="application/x-tex">\text{LBC}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord text"><span class="mord">LBC</span></span></span></span></span> ) 用于模拟平面周期结构表面：如阵列天线结构。</p>
+<p>主从边界条件包括主边界和从边界两种边界条件，二者总是成对出现的，且主边界表面和从边界表面的形状、大小和方向必须完全相同，主边界表面和从边界表面上的电场存在一定的相位差，该相位差就是周期性结构相邻单元之间存在的相位差。</p>
+<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><msub><mover accent="true"><mi>E</mi><mo>⃗</mo></mover><mrow><mi mathvariant="normal">S</mi><mi mathvariant="normal">l</mi><mi mathvariant="normal">a</mi><mi mathvariant="normal">v</mi><mi mathvariant="normal">e</mi></mrow></msub><mo>=</mo><msup><mi>e</mi><mrow><mi>j</mi><mi>ϕ</mi></mrow></msup><msub><mover accent="true"><mi>E</mi><mo>⃗</mo></mover><mrow><mi mathvariant="normal">M</mi><mi mathvariant="normal">a</mi><mi mathvariant="normal">s</mi><mi mathvariant="normal">t</mi><mi mathvariant="normal">e</mi><mi mathvariant="normal">r</mi></mrow></msub><mo>=</mo><msup><mi>e</mi><mrow><mi>j</mi><mfrac><mi>d</mi><mi>λ</mi></mfrac><mi>sin</mi><mo>⁡</mo><mi>θ</mi><mi>cos</mi><mo>⁡</mo><mi>φ</mi></mrow></msup><msub><mover accent="true"><mi>E</mi><mo>⃗</mo></mover><mrow><mi mathvariant="normal">M</mi><mi mathvariant="normal">a</mi><mi mathvariant="normal">s</mi><mi mathvariant="normal">t</mi><mi mathvariant="normal">e</mi><mi mathvariant="normal">r</mi></mrow></msub><mspace linebreak="newline"></mspace><mi>ϕ</mi><mo>=</mo><mfrac><mi>d</mi><mi>λ</mi></mfrac><mi>sin</mi><mo>⁡</mo><mi>θ</mi><mi>cos</mi><mo>⁡</mo><mi>φ</mi></mrow><annotation encoding="application/x-tex">\vec{E}_{\mathrm{Slave}}=e^{j\phi}\vec{E}_{\mathrm{Master}}=e^{j\frac d\lambda \sin\theta\cos\varphi}\vec{E}_{\mathrm{Master}}\newline
+\phi=\frac d\lambda\sin\theta\cos\varphi
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.1163299999999998em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord accent"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.9663299999999999em;"><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.05764em;">E</span></span></span><span style="top:-3.25233em;"><span class="pstrut" style="height:3em;"></span><span class="accent-body" style="left:-0.15216em;"><span class="overlay" style="height:0.714em;width:0.471em;"><svg width='0.471em' height='0.714em' style='width:0.471em' viewBox='0 0 471 714' preserveAspectRatio='xMinYMin'><path d='M377 20c0-5.333 1.833-10 5.5-14S391 0 397 0c4.667 0 8.667 1.667 12 5
+3.333 2.667 6.667 9 10 19 6.667 24.667 20.333 43.667 41 57 7.333 4.667 11
+10.667 11 18 0 6-1 10-3 12s-6.667 5-14 9c-28.667 14.667-53.667 35.667-75 63
+-1.333 1.333-3.167 3.5-5.5 6.5s-4 4.833-5 5.5c-1 .667-2.5 1.333-4.5 2s-4.333 1
+-7 1c-4.667 0-9.167-1.833-13.5-5.5S337 184 337 178c0-12.667 15.667-32.333 47-59
+H213l-171-1c-8.667-6-13-12.333-13-19 0-4.667 4.333-11.333 13-20h359
+c-16-25.333-24-45-24-59z'/></svg></span></span></span></span></span></span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.33610799999999996em;"><span style="top:-2.5500000000000003em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathrm mtight">S</span><span class="mord mathrm mtight">l</span><span class="mord mathrm mtight">a</span><span class="mord mathrm mtight" style="margin-right:0.01389em;">v</span><span class="mord mathrm mtight">e</span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1.1163299999999998em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">e</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8991079999999999em;"><span style="top:-3.1130000000000004em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.05724em;">j</span><span class="mord mathnormal mtight">ϕ</span></span></span></span></span></span></span></span></span><span class="mord"><span class="mord accent"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.9663299999999999em;"><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.05764em;">E</span></span></span><span style="top:-3.25233em;"><span class="pstrut" style="height:3em;"></span><span class="accent-body" style="left:-0.15216em;"><span class="overlay" style="height:0.714em;width:0.471em;"><svg width='0.471em' height='0.714em' style='width:0.471em' viewBox='0 0 471 714' preserveAspectRatio='xMinYMin'><path d='M377 20c0-5.333 1.833-10 5.5-14S391 0 397 0c4.667 0 8.667 1.667 12 5
+3.333 2.667 6.667 9 10 19 6.667 24.667 20.333 43.667 41 57 7.333 4.667 11
+10.667 11 18 0 6-1 10-3 12s-6.667 5-14 9c-28.667 14.667-53.667 35.667-75 63
+-1.333 1.333-3.167 3.5-5.5 6.5s-4 4.833-5 5.5c-1 .667-2.5 1.333-4.5 2s-4.333 1
+-7 1c-4.667 0-9.167-1.833-13.5-5.5S337 184 337 178c0-12.667 15.667-32.333 47-59
+H213l-171-1c-8.667-6-13-12.333-13-19 0-4.667 4.333-11.333 13-20h359
+c-16-25.333-24-45-24-59z'/></svg></span></span></span></span></span></span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathrm mtight">M</span><span class="mord mathrm mtight">a</span><span class="mord mathrm mtight">s</span><span class="mord mathrm mtight">t</span><span class="mord mathrm mtight">e</span><span class="mord mathrm mtight">r</span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1.17902em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">e</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:1.02902em;"><span style="top:-3.4130000000000003em;margin-right:0.05em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.05724em;">j</span><span class="mord mtight"><span class="mopen nulldelimiter sizing reset-size3 size6"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.8800285714285714em;"><span style="top:-2.656em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mathnormal mtight">λ</span></span></span><span style="top:-3.2255000000000003em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line mtight" style="border-bottom-width:0.049em;"></span></span><span style="top:-3.384em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mathnormal mtight">d</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.344em;"><span></span></span></span></span></span><span class="mclose nulldelimiter sizing reset-size3 size6"></span></span><span class="mspace mtight" style="margin-right:0.19516666666666668em;"></span><span class="mop mtight"><span class="mtight">s</span><span class="mtight">i</span><span class="mtight">n</span></span><span class="mspace mtight" style="margin-right:0.19516666666666668em;"></span><span class="mord mathnormal mtight" style="margin-right:0.02778em;">θ</span><span class="mspace mtight" style="margin-right:0.19516666666666668em;"></span><span class="mop mtight"><span class="mtight">c</span><span class="mtight">o</span><span class="mtight">s</span></span><span class="mspace mtight" style="margin-right:0.19516666666666668em;"></span><span class="mord mathnormal mtight">φ</span></span></span></span></span></span></span></span></span><span class="mord"><span class="mord accent"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.9663299999999999em;"><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.05764em;">E</span></span></span><span style="top:-3.25233em;"><span class="pstrut" style="height:3em;"></span><span class="accent-body" style="left:-0.15216em;"><span class="overlay" style="height:0.714em;width:0.471em;"><svg width='0.471em' height='0.714em' style='width:0.471em' viewBox='0 0 471 714' preserveAspectRatio='xMinYMin'><path d='M377 20c0-5.333 1.833-10 5.5-14S391 0 397 0c4.667 0 8.667 1.667 12 5
+3.333 2.667 6.667 9 10 19 6.667 24.667 20.333 43.667 41 57 7.333 4.667 11
+10.667 11 18 0 6-1 10-3 12s-6.667 5-14 9c-28.667 14.667-53.667 35.667-75 63
+-1.333 1.333-3.167 3.5-5.5 6.5s-4 4.833-5 5.5c-1 .667-2.5 1.333-4.5 2s-4.333 1
+-7 1c-4.667 0-9.167-1.833-13.5-5.5S337 184 337 178c0-12.667 15.667-32.333 47-59
+H213l-171-1c-8.667-6-13-12.333-13-19 0-4.667 4.333-11.333 13-20h359
+c-16-25.333-24-45-24-59z'/></svg></span></span></span></span></span></span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathrm mtight">M</span><span class="mord mathrm mtight">a</span><span class="mord mathrm mtight">s</span><span class="mord mathrm mtight">t</span><span class="mord mathrm mtight">e</span><span class="mord mathrm mtight">r</span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span><span class="mspace newline"></span><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathnormal">ϕ</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:2.05744em;vertical-align:-0.686em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.37144em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord mathnormal">λ</span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord mathnormal">d</span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.686em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mop">sin</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">θ</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mop">cos</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathnormal">φ</span></span></span></span></span></p>
+<blockquote>
+<p>定义主从边界表面时，需要正确设置 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="normal">U</mi><mo separator="true">,</mo><mi mathvariant="normal">V</mi></mrow><annotation encoding="application/x-tex">\mathrm{U, V}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8777699999999999em;vertical-align:-0.19444em;"></span><span class="mord"><span class="mord mathrm">U</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathrm" style="margin-right:0.01389em;">V</span></span></span></span></span> 坐标系，保证主从边界表面大小和方向完全一致。</p>
+<p>但是在我的 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>HFSS</mtext></mrow><annotation encoding="application/x-tex">\text{HFSS}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord text"><span class="mord">HFSS</span></span></span></span></span> 中这个选项叫做 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>Coupled</mtext></mrow><annotation encoding="application/x-tex">\text{Coupled}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord text"><span class="mord">Coupled</span></span></span></span></span>。</p>
+</blockquote>
+<h2 id="11-理想匹配层-textpml"><a class="markdownIt-Anchor" href="#11-理想匹配层-textpml"></a> 11. 理想匹配层  <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>PML</mtext></mrow><annotation encoding="application/x-tex">\text{PML}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord text"><span class="mord">PML</span></span></span></span></span></h2>
+<p>理想匹配层 ( <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>Perfectly Matched Layers</mtext></mrow><annotation encoding="application/x-tex">\text{Perfectly Matched Layers}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord text"><span class="mord">Perfectly Matched Layers</span></span></span></span></span>，简称 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>PML</mtext></mrow><annotation encoding="application/x-tex">\text{PML}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord text"><span class="mord">PML</span></span></span></span></span> )，是能够完全吸收入射电磁波的假想的各项异性材料边界。理想匹配层有两种典型的应用： 一是用于外场问题中的自由空间截断，二是用于导波问题中的吸收负载。</p>
+<p>对于导波的吸收负载，理想匹配层模拟导波结构均匀地延伸到无穷远处。</p>
+<p>对于自由空间截断情况，理想匹配层的作用类似于辐射边界条件，<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>PML</mtext></mrow><annotation encoding="application/x-tex">\text{PML}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord text"><span class="mord">PML</span></span></span></span></span> 表面能够完全吸收入射过来的电磁波。和辐射边界条件相比，理想匹配层因为能够完全吸收入射的电磁波，零反射，因此计算结果更精确：同时理想匹配层表面可以距离辐射体更近(差不多十分之一个波长即可)，不需要像辐射边界表面一般需要距离辐射体大于四分之一个波长。</p>
+<h2 id="12-textfe-bi"><a class="markdownIt-Anchor" href="#12-textfe-bi"></a> 12. <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>FE-BI</mtext></mrow><annotation encoding="application/x-tex">\text{FE-BI}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord text"><span class="mord">FE-BI</span></span></span></span></span></h2>
+<p>专门针对电大尺寸的开放结构仿真，对辐射体距离没有要求，能够完全吸收所有的入射波，与结构的共形性非常好，<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>FE-BI</mtext></mrow><annotation encoding="application/x-tex">\text{FE-BI}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord text"><span class="mord">FE-BI</span></span></span></span></span> 算法可以有效降低计算机硬件资源消耗，针对外部辐射空间采用 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>IE</mtext></mrow><annotation encoding="application/x-tex">\text{IE}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord text"><span class="mord">IE</span></span></span></span></span> 求解，针对金属结构体采用 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>FEM</mtext></mrow><annotation encoding="application/x-tex">\text{FEM}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord text"><span class="mord">FEM</span></span></span></span></span> 求解，大幅减少辐射区域的求解规模，提升求解效率。</p>
+<blockquote>
+<p>当然，在 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>Ansys Electronic 2023 R1</mtext></mrow><annotation encoding="application/x-tex">\text{Ansys Electronic 2023 R1}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord text"><span class="mord">Ansys Electronic 2023 R1</span></span></span></span></span> 的版本中还有 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>Anisotropic Impedance</mtext></mrow><annotation encoding="application/x-tex">\text{Anisotropic Impedance}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord text"><span class="mord">Anisotropic Impedance</span></span></span></span></span>, <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>Aperture</mtext></mrow><annotation encoding="application/x-tex">\text{Aperture}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8777699999999999em;vertical-align:-0.19444em;"></span><span class="mord text"><span class="mord">Aperture</span></span></span></span></span>, <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>Frenel(SBR+)</mtext></mrow><annotation encoding="application/x-tex">\text{Frenel(SBR+)}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord text"><span class="mord">Frenel(SBR+)</span></span></span></span></span>, <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>Half Space</mtext></mrow><annotation encoding="application/x-tex">\text{Half Space}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord text"><span class="mord">Half Space</span></span></span></span></span>, <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>Linked Impedance</mtext></mrow><annotation encoding="application/x-tex">\text{Linked Impedance}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord text"><span class="mord">Linked Impedance</span></span></span></span></span>, <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>Multipaction SEE</mtext></mrow><annotation encoding="application/x-tex">\text{Multipaction SEE}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord text"><span class="mord">Multipaction SEE</span></span></span></span></span> ，感觉这些边界条件一时半会儿用不上，就暂时不管了。</p>
+</blockquote>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/stpguy/tags/HFSS%E5%85%A5%E9%97%A8/" rel="tag"># HFSS入门</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/stpguy/2023/11/12/HFSS%E4%B8%AD%E7%9A%84%E5%BB%BA%E6%A8%A1%E6%93%8D%E4%BD%9C/" rel="prev" title="HFSS中的建模操作">
+                  <i class="fa fa-angle-left"></i> HFSS中的建模操作
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/stpguy/2023/11/14/HFSS%E4%B8%AD%E7%9A%84%E6%BF%80%E5%8A%B1%E6%96%B9%E5%BC%8F/" rel="next" title="HFSS中的激励方式">
+                  HFSS中的激励方式 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Monique</span>
+  </div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+  <a href="https://github.com/stpguy" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+</body>
+</html>

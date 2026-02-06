@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 8.1.1">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/stpguy/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/stpguy/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/stpguy/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/stpguy/images/logo.svg" color="#222">
+  <link rel="manifest" href="/stpguy/manifest.json">
+
+<link rel="stylesheet" href="/stpguy/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"stpguy.github.io","root":"/stpguy/","images":"/stpguy/images","scheme":"Gemini","darkmode":true,"version":"8.27.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":true,"style":null},"fold":{"enable":true,"height":200},"language":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/stpguy/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/stpguy/js/config.js" defer></script>
+
+    <meta name="description" content="HFSS中的建模操作">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="HFSS中的建模操作">
+<meta property="og:url" content="https://stpguy.github.io/stpguy/2023/11/12/HFSS%E4%B8%AD%E7%9A%84%E5%BB%BA%E6%A8%A1%E6%93%8D%E4%BD%9C/index.html">
+<meta property="og:site_name" content="Monique&#39;s Blog">
+<meta property="og:description" content="HFSS中的建模操作">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://stpguy.github.io/stpguy/2023/11/12/HFSS%E4%B8%AD%E7%9A%84%E5%BB%BA%E6%A8%A1%E6%93%8D%E4%BD%9C/image-20231112144017589.png">
+<meta property="og:image" content="https://stpguy.github.io/stpguy/2023/11/12/HFSS%E4%B8%AD%E7%9A%84%E5%BB%BA%E6%A8%A1%E6%93%8D%E4%BD%9C/image-20231112144054027.png">
+<meta property="og:image" content="https://stpguy.github.io/stpguy/2023/11/12/HFSS%E4%B8%AD%E7%9A%84%E5%BB%BA%E6%A8%A1%E6%93%8D%E4%BD%9C/image-20231112144612788.png">
+<meta property="og:image" content="https://stpguy.github.io/stpguy/2023/11/12/HFSS%E4%B8%AD%E7%9A%84%E5%BB%BA%E6%A8%A1%E6%93%8D%E4%BD%9C/image-20231112144706735.png">
+<meta property="og:image" content="https://stpguy.github.io/stpguy/2023/11/12/HFSS%E4%B8%AD%E7%9A%84%E5%BB%BA%E6%A8%A1%E6%93%8D%E4%BD%9C/image-20231112145035444.png">
+<meta property="og:image" content="https://stpguy.github.io/stpguy/2023/11/12/HFSS%E4%B8%AD%E7%9A%84%E5%BB%BA%E6%A8%A1%E6%93%8D%E4%BD%9C/image-20231112145522128.png">
+<meta property="og:image" content="https://stpguy.github.io/stpguy/2023/11/12/HFSS%E4%B8%AD%E7%9A%84%E5%BB%BA%E6%A8%A1%E6%93%8D%E4%BD%9C/image-20231112145628252.png">
+<meta property="og:image" content="https://stpguy.github.io/stpguy/2023/11/12/HFSS%E4%B8%AD%E7%9A%84%E5%BB%BA%E6%A8%A1%E6%93%8D%E4%BD%9C/image-20231112145648402.png">
+<meta property="og:image" content="https://stpguy.github.io/stpguy/2023/11/12/HFSS%E4%B8%AD%E7%9A%84%E5%BB%BA%E6%A8%A1%E6%93%8D%E4%BD%9C/image-20231112152945369.png">
+<meta property="og:image" content="https://stpguy.github.io/stpguy/2023/11/12/HFSS%E4%B8%AD%E7%9A%84%E5%BB%BA%E6%A8%A1%E6%93%8D%E4%BD%9C/image-20231112154255973.png">
+<meta property="og:image" content="https://stpguy.github.io/stpguy/2023/11/12/HFSS%E4%B8%AD%E7%9A%84%E5%BB%BA%E6%A8%A1%E6%93%8D%E4%BD%9C/image-20231112154320861.png">
+<meta property="og:image" content="https://stpguy.github.io/stpguy/2023/11/12/HFSS%E4%B8%AD%E7%9A%84%E5%BB%BA%E6%A8%A1%E6%93%8D%E4%BD%9C/image-20231112191244573.png">
+<meta property="og:image" content="https://stpguy.github.io/stpguy/2023/11/12/HFSS%E4%B8%AD%E7%9A%84%E5%BB%BA%E6%A8%A1%E6%93%8D%E4%BD%9C/image-20231112174238041.png">
+<meta property="og:image" content="https://stpguy.github.io/stpguy/2023/11/12/HFSS%E4%B8%AD%E7%9A%84%E5%BB%BA%E6%A8%A1%E6%93%8D%E4%BD%9C/image-20231112174438049.png">
+<meta property="og:image" content="https://stpguy.github.io/stpguy/2023/11/12/HFSS%E4%B8%AD%E7%9A%84%E5%BB%BA%E6%A8%A1%E6%93%8D%E4%BD%9C/image-20231112174530678.png">
+<meta property="og:image" content="https://stpguy.github.io/stpguy/2023/11/12/HFSS%E4%B8%AD%E7%9A%84%E5%BB%BA%E6%A8%A1%E6%93%8D%E4%BD%9C/image-20231112175027932.png">
+<meta property="og:image" content="https://stpguy.github.io/stpguy/2023/11/12/HFSS%E4%B8%AD%E7%9A%84%E5%BB%BA%E6%A8%A1%E6%93%8D%E4%BD%9C/image-20231112175041292.png">
+<meta property="og:image" content="https://stpguy.github.io/stpguy/2023/11/12/HFSS%E4%B8%AD%E7%9A%84%E5%BB%BA%E6%A8%A1%E6%93%8D%E4%BD%9C/image-20231112175500482.png">
+<meta property="og:image" content="https://stpguy.github.io/stpguy/2023/11/12/HFSS%E4%B8%AD%E7%9A%84%E5%BB%BA%E6%A8%A1%E6%93%8D%E4%BD%9C/image-20231112175850090.png">
+<meta property="og:image" content="https://stpguy.github.io/stpguy/2023/11/12/HFSS%E4%B8%AD%E7%9A%84%E5%BB%BA%E6%A8%A1%E6%93%8D%E4%BD%9C/image-20231112175937953.png">
+<meta property="og:image" content="https://stpguy.github.io/stpguy/2023/11/12/HFSS%E4%B8%AD%E7%9A%84%E5%BB%BA%E6%A8%A1%E6%93%8D%E4%BD%9C/image-20231112180139788.png">
+<meta property="og:image" content="https://stpguy.github.io/stpguy/2023/11/12/HFSS%E4%B8%AD%E7%9A%84%E5%BB%BA%E6%A8%A1%E6%93%8D%E4%BD%9C/image-20231112180354359.png">
+<meta property="og:image" content="https://stpguy.github.io/stpguy/2023/11/12/HFSS%E4%B8%AD%E7%9A%84%E5%BB%BA%E6%A8%A1%E6%93%8D%E4%BD%9C/image-20231112180849545.png">
+<meta property="og:image" content="https://stpguy.github.io/stpguy/2023/11/12/HFSS%E4%B8%AD%E7%9A%84%E5%BB%BA%E6%A8%A1%E6%93%8D%E4%BD%9C/image-20231112180947103.png">
+<meta property="og:image" content="https://stpguy.github.io/stpguy/2023/11/12/HFSS%E4%B8%AD%E7%9A%84%E5%BB%BA%E6%A8%A1%E6%93%8D%E4%BD%9C/image-20231112181139190.png">
+<meta property="og:image" content="https://stpguy.github.io/stpguy/2023/11/12/HFSS%E4%B8%AD%E7%9A%84%E5%BB%BA%E6%A8%A1%E6%93%8D%E4%BD%9C/image-20231112181148390.png">
+<meta property="og:image" content="https://stpguy.github.io/stpguy/2023/11/12/HFSS%E4%B8%AD%E7%9A%84%E5%BB%BA%E6%A8%A1%E6%93%8D%E4%BD%9C/image-20231112182302642.png">
+<meta property="og:image" content="https://stpguy.github.io/stpguy/2023/11/12/HFSS%E4%B8%AD%E7%9A%84%E5%BB%BA%E6%A8%A1%E6%93%8D%E4%BD%9C/image-20231112190058383.png">
+<meta property="og:image" content="https://stpguy.github.io/stpguy/2023/11/12/HFSS%E4%B8%AD%E7%9A%84%E5%BB%BA%E6%A8%A1%E6%93%8D%E4%BD%9C/image-20231112190625169.png">
+<meta property="og:image" content="https://stpguy.github.io/stpguy/2023/11/12/HFSS%E4%B8%AD%E7%9A%84%E5%BB%BA%E6%A8%A1%E6%93%8D%E4%BD%9C/image-20231112191644684.png">
+<meta property="og:image" content="https://stpguy.github.io/stpguy/2023/11/12/HFSS%E4%B8%AD%E7%9A%84%E5%BB%BA%E6%A8%A1%E6%93%8D%E4%BD%9C/image-20231112191948822.png">
+<meta property="og:image" content="https://stpguy.github.io/stpguy/2023/11/12/HFSS%E4%B8%AD%E7%9A%84%E5%BB%BA%E6%A8%A1%E6%93%8D%E4%BD%9C/image-20231112192132850.png">
+<meta property="og:image" content="https://stpguy.github.io/stpguy/2023/11/12/HFSS%E4%B8%AD%E7%9A%84%E5%BB%BA%E6%A8%A1%E6%93%8D%E4%BD%9C/image-20231112192342890.png">
+<meta property="og:image" content="https://stpguy.github.io/stpguy/2023/11/12/HFSS%E4%B8%AD%E7%9A%84%E5%BB%BA%E6%A8%A1%E6%93%8D%E4%BD%9C/image-20231112192430875.png">
+<meta property="og:image" content="https://stpguy.github.io/stpguy/2023/11/12/HFSS%E4%B8%AD%E7%9A%84%E5%BB%BA%E6%A8%A1%E6%93%8D%E4%BD%9C/image-20231112192611679.png">
+<meta property="og:image" content="https://stpguy.github.io/stpguy/2023/11/12/HFSS%E4%B8%AD%E7%9A%84%E5%BB%BA%E6%A8%A1%E6%93%8D%E4%BD%9C/image-20231112193425563.png">
+<meta property="article:published_time" content="2023-11-12T06:22:23.000Z">
+<meta property="article:modified_time" content="2024-05-17T12:40:38.000Z">
+<meta property="article:author" content="Monique">
+<meta property="article:tag" content="HFSS入门">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://stpguy.github.io/stpguy/2023/11/12/HFSS%E4%B8%AD%E7%9A%84%E5%BB%BA%E6%A8%A1%E6%93%8D%E4%BD%9C/image-20231112144017589.png">
+
+
+<link rel="canonical" href="https://stpguy.github.io/stpguy/2023/11/12/HFSS%E4%B8%AD%E7%9A%84%E5%BB%BA%E6%A8%A1%E6%93%8D%E4%BD%9C/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://stpguy.github.io/stpguy/2023/11/12/HFSS%E4%B8%AD%E7%9A%84%E5%BB%BA%E6%A8%A1%E6%93%8D%E4%BD%9C/","path":"2023/11/12/HFSS中的建模操作/","title":"HFSS中的建模操作"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>HFSS中的建模操作 | Monique's Blog</title>
+  
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous" defer></script>
+<script src="/stpguy/js/utils.js" defer></script><script src="/stpguy/js/motion.js" defer></script><script src="/stpguy/js/sidebar.js" defer></script><script src="/stpguy/js/next-boot.js" defer></script><script src="/stpguy/js/bookmark.js" defer></script><script src="/stpguy/js/pjax.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/stpguy/js/third-party/search/local-search.js" defer></script>
+
+  <script class="next-config" data-name="pdf" type="application/json">{"object_url":{"url":"https://cdnjs.cloudflare.com/ajax/libs/pdfobject/2.3.1/pdfobject.min.js","integrity":"sha256-jI72I8ZLVflVOisZIOaLvRew3tyvzeu6aZXFm7P7dEo="},"url":"/stpguy/lib/pdf/web/viewer.html"}</script>
+  <script src="/stpguy/js/third-party/tags/pdf.js" defer></script>
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css" integrity="sha256-UF1fgpAiu3tPJN/uCqEUHNe7pnr+QR0SQDNfgglgtcM=" crossorigin="anonymous">
+  <script class="next-config" data-name="katex" type="application/json">{"copy_tex_js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/contrib/copy-tex.min.js","integrity":"sha256-Us54+rSGDSTvIhKKUs4kygE2ipA0RXpWWh0/zLqw3bs="}}</script>
+  <script src="/stpguy/js/third-party/math/katex.js" defer></script>
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/3.0.1/quicklink.umd.js" integrity="sha256-44BednzIpUeQJcY8qtLyarFu0UCCTbgmWOvaoehiFQQ=" crossorigin="anonymous" defer></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"https://stpguy.github.io/stpguy/2023/11/12/HFSS%E4%B8%AD%E7%9A%84%E5%BB%BA%E6%A8%A1%E6%93%8D%E4%BD%9C/"}</script>
+  <script src="/stpguy/js/third-party/quicklink.js" defer></script>
+
+  <noscript>
+    <link rel="stylesheet" href="/stpguy/css/noscript.css">
+  </noscript>
+<style type="text/css">
+.spoiler {
+  display: inline;
+}
+p.spoiler {
+  display: flex;
+}
+.spoiler a {
+  pointer-events: none;
+}
+.spoiler-blur, .spoiler-blur > * {
+  transition: text-shadow .5s ease;
+}
+.spoiler .spoiler-blur, .spoiler .spoiler-blur > * {
+  color: rgba(0, 0, 0, 0);
+  background-color: rgba(0, 0, 0, 0);
+  text-shadow: 0 0 10px grey;
+  cursor: pointer;
+}
+.spoiler .spoiler-blur:hover, .spoiler .spoiler-blur:hover > * {
+  text-shadow: 0 0 5px grey;
+}
+.spoiler-box, .spoiler-box > * {
+  transition: color .5s ease,
+  background-color .5s ease;
+}
+.spoiler .spoiler-box, .spoiler .spoiler-box > * {
+  color: black;
+  background-color: black;
+  text-shadow: none;
+}</style></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/stpguy/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Monique's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">A long way to go</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/stpguy/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/stpguy/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">71</span></a></li><li class="menu-item menu-item-archives"><a href="/stpguy/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">126</span></a></li><li class="menu-item menu-item-schedule"><a href="/stpguy/schedule/" rel="section"><i class="fa fa-calendar fa-fw"></i>Schedule</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="Searching..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AD%A6%E4%B9%A0%E5%86%85%E5%AE%B9"><span class="nav-number">1.</span> <span class="nav-text"> 学习内容</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E6%A8%A1%E5%9E%8B"><span class="nav-number">2.</span> <span class="nav-text"> 基本模型</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E5%9F%BA%E6%9C%AC%E7%89%A9%E4%BD%93%E6%A8%A1%E5%9E%8B"><span class="nav-number">3.</span> <span class="nav-text"> 创建基本物体模型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B1%9E%E6%80%A7%E5%AF%B9%E8%AF%9D%E6%A1%86"><span class="nav-number">3.1.</span> <span class="nav-text"> 属性对话框</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%9E%BA%E6%97%8B%E7%BB%93%E6%9E%84-texthelix"><span class="nav-number">3.2.</span> <span class="nav-text"> 螺旋结构 (Helix\text{Helix}Helix)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%80%9A%E8%BF%87-textsweep-%E7%94%9F%E6%88%90%E6%A8%A1%E5%9E%8B"><span class="nav-number">3.3.</span> <span class="nav-text"> 通过 Sweep\text{Sweep}Sweep 生成模型</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%89%A9%E4%BD%93%E7%9A%84%E6%9D%90%E6%96%99%E5%B1%9E%E6%80%A7"><span class="nav-number">4.</span> <span class="nav-text"> 物体的材料属性</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BC%96%E8%BE%91%E6%9D%90%E6%96%99%E5%B1%9E%E6%80%A7"><span class="nav-number">4.1.</span> <span class="nav-text"> 编辑材料属性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%BB%98%E8%AE%A4%E6%9D%90%E6%96%99"><span class="nav-number">4.2.</span> <span class="nav-text"> 默认材料</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%BC%A0%E6%A0%87%E7%9A%84%E7%A7%BB%E5%8A%A8%E6%A8%A1%E5%BC%8F"><span class="nav-number">5.</span> <span class="nav-text"> 鼠标的移动模式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#textsnap-mode"><span class="nav-number">5.1.</span> <span class="nav-text"> Snap Mode\text{Snap Mode}Snap Mode</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%94%B9%E5%8F%98%E8%A7%86%E5%9B%BE%E6%93%8D%E4%BD%9C%E5%92%8C%E6%98%BE%E7%A4%BA%E9%9A%90%E8%97%8F%E7%89%A9%E4%BD%93%E6%A8%A1%E5%9E%8B"><span class="nav-number">6.</span> <span class="nav-text"> 改变视图操作和显示&#x2F;隐藏物体模型</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%80%89%E6%8B%A9%E6%93%8D%E4%BD%9C"><span class="nav-number">7.</span> <span class="nav-text"> 选择操作</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%89%A9%E4%BD%93%E6%A8%A1%E5%9E%8B%E7%9A%84%E5%87%A0%E4%BD%95%E5%8F%98%E6%8D%A2"><span class="nav-number">8.</span> <span class="nav-text"> 物体模型的几何变换</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E7%A1%80%E5%8F%98%E6%8D%A2"><span class="nav-number">8.1.</span> <span class="nav-text"> 基础变换</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%83%E5%B0%94%E8%BF%90%E7%AE%97"><span class="nav-number">8.2.</span> <span class="nav-text"> 布尔运算</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#textsplit"><span class="nav-number">8.3.</span> <span class="nav-text"> Split\text{Split}Split</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#textimprint"><span class="nav-number">8.4.</span> <span class="nav-text"> Imprint\text{Imprint}Imprint</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#texthfss-%E4%B8%AD%E7%9A%84%E5%9D%90%E6%A0%87%E7%B3%BB"><span class="nav-number">9.</span> <span class="nav-text"> HFSS\text{HFSS}HFSS 中的坐标系</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9D%A2%E5%9D%90%E6%A0%87%E7%B3%BB"><span class="nav-number">9.1.</span> <span class="nav-text"> 面坐标系：</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Monique"
+      src="/stpguy/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Monique</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/stpguy/archives/">
+          <span class="site-state-item-count">126</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/stpguy/tags/">
+        <span class="site-state-item-count">71</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/stpguy" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;stpguy" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="gmail:stpguylee@gmail.com" title="E-Mail → gmail:stpguylee@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://stpguy.github.io/stpguy/2023/11/12/HFSS%E4%B8%AD%E7%9A%84%E5%BB%BA%E6%A8%A1%E6%93%8D%E4%BD%9C/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/stpguy/images/avatar.jpg">
+      <meta itemprop="name" content="Monique">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Monique's Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="HFSS中的建模操作 | Monique's Blog">
+      <meta itemprop="description" content="HFSS中的建模操作">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          HFSS中的建模操作
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2023-11-12 14:22:23" itemprop="dateCreated datePublished" datetime="2023-11-12T14:22:23+08:00">2023-11-12</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2024-05-17 20:40:38" itemprop="dateModified" datetime="2024-05-17T20:40:38+08:00">2024-05-17</time>
+    </span>
+
+  
+</div>
+
+            <div class="post-description">HFSS中的建模操作</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="学习内容"><a class="markdownIt-Anchor" href="#学习内容"></a> 学习内容</h1>
+<iframe src="//player.bilibili.com/player.html?aid=385016188&bvid=BV1vZ4y1q7gt&cid=749472031&p=6&high_quality=1&danmaku=1&autoplay=0" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" style="width: 100%; height: 500px; max-width: 100%；align:center; padding:20px 0;"> </iframe>
+<ul>
+<li>基本物体模型 (<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>Primitive</mtext></mrow><annotation encoding="application/x-tex">\text{Primitive}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord text"><span class="mord">Primitive</span></span></span></span></span>) 的概念</li>
+<li>创建基本物体模型的具体步骤和操作过程
+<ul>
+<li>了解创建物体模型的两种方法、物体属性对话框的含义。</li>
+<li>学习创建圆弧线、圆面、圆锥体及螺旋结构(<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>Helix</mtext></mrow><annotation encoding="application/x-tex">\text{Helix}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord text"><span class="mord">Helix</span></span></span></span></span>)、平面螺旋结构(<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>Spiral</mtext></mrow><annotation encoding="application/x-tex">\text{Spiral}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord text"><span class="mord">Spiral</span></span></span></span></span>)的过程</li>
+</ul>
+</li>
+<li>物体的材料属性
+<ul>
+<li>编辑物体材料库：添加新材料、编辑修改材料参数</li>
+<li>设置物体材料：设置建模时的默认材料，查看和更改物体的材料</li>
+</ul>
+</li>
+<li>鼠标的移动模式和捕捉模式(<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>Snap Mode</mtext></mrow><annotation encoding="application/x-tex">\text{Snap Mode}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord text"><span class="mord">Snap Mode</span></span></span></span></span>)</li>
+<li>改变视图操作和显示/隐藏物体模型</li>
+<li>选择操作</li>
+<li>物体模型的几何变换
+<ul>
+<li>物体模型的移动方式(<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>Edit&gt;Arrange</mtext></mrow><annotation encoding="application/x-tex">\text{Edit&gt;Arrange}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord text"><span class="mord">Edit&gt;Arrange</span></span></span></span></span>)：平移(<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>Move</mtext></mrow><annotation encoding="application/x-tex">\text{Move}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord text"><span class="mord">Move</span></span></span></span></span>)、旋转移动(<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>Rotate</mtext></mrow><annotation encoding="application/x-tex">\text{Rotate}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord text"><span class="mord">Rotate</span></span></span></span></span>)、镜像移动(<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>Mirror</mtext></mrow><annotation encoding="application/x-tex">\text{Mirror}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord text"><span class="mord">Mirror</span></span></span></span></span>)</li>
+<li>复制物体模型(<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>Edit&gt;Duplicate</mtext></mrow><annotation encoding="application/x-tex">\text{Edit&gt;Duplicate}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord text"><span class="mord">Edit&gt;Duplicate</span></span></span></span></span>)：<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>(Along Line)、(Around Axis)、(Mirror)</mtext></mrow><annotation encoding="application/x-tex">\text{(Along Line)、(Around Axis)、(Mirror)}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord text"><span class="mord">(Along Line)</span><span class="mord cjk_fallback">、</span><span class="mord">(Around Axis)</span><span class="mord cjk_fallback">、</span><span class="mord">(Mirror)</span></span></span></span></span></li>
+<li>改变模型尺寸(<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>Edit&gt;Arrange&gt;Offset</mtext></mrow><annotation encoding="application/x-tex">\text{Edit&gt;Arrange&gt;Offset}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord text"><span class="mord">Edit&gt;Arrange&gt;Offset</span></span></span></span></span>)：<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>Edit&gt;Scale</mtext></mrow><annotation encoding="application/x-tex">\text{Edit&gt;Scale}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.73354em;vertical-align:-0.0391em;"></span><span class="mord text"><span class="mord">Edit&gt;Scale</span></span></span></span></span></li>
+<li>通过扫描的方式创建物体(<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>Draw&gt;Sweep</mtext></mrow><annotation encoding="application/x-tex">\text{Draw&gt;Sweep}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8777699999999999em;vertical-align:-0.19444em;"></span><span class="mord text"><span class="mord">Draw&gt;Sweep</span></span></span></span></span>)</li>
+</ul>
+</li>
+<li>物体的布尔操作
+<ul>
+<li><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>Unite</mtext><mspace width="1em"/><mtext>Subtract</mtext><mspace width="1em"/><mtext>Intersect</mtext><mspace width="1em"/><mtext>Split</mtext><mspace width="1em"/><mtext>Imprint</mtext></mrow><annotation encoding="application/x-tex">\text{Unite\quad Subtract\quad Intersect\quad Split\quad Imprint}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord text"><span class="mord">Unite</span><span class="mspace" style="margin-right:1em;"></span><span class="mord">Subtract</span><span class="mspace" style="margin-right:1em;"></span><span class="mord">Intersect</span><span class="mspace" style="margin-right:1em;"></span><span class="mord">Split</span><span class="mspace" style="margin-right:1em;"></span><span class="mord">Imprint</span></span></span></span></span></li>
+</ul>
+</li>
+<li><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>HFSS</mtext></mrow><annotation encoding="application/x-tex">\text{HFSS}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord text"><span class="mord">HFSS</span></span></span></span></span> 中的坐标系
+<ul>
+<li>相对坐标系和面坐标系、设置当前坐标系</li>
+</ul>
+</li>
+<li>建模相关选项设置</li>
+</ul>
+<h1 id="基本模型"><a class="markdownIt-Anchor" href="#基本模型"></a> 基本模型</h1>
+<p><img src="./image-20231112144017589.png" alt="image-20231112144017589" style="zoom:67%;" /><img src="./image-20231112144054027.png" alt="image-20231112144054027" style="zoom: 67%;" /></p>
+<h1 id="创建基本物体模型"><a class="markdownIt-Anchor" href="#创建基本物体模型"></a> 创建基本物体模型</h1>
+<ul>
+<li>状态栏输入位置坐标及大小尺寸<img src="./image-20231112144612788.png" alt="image-20231112144612788" /><img src="./image-20231112144706735.png" alt="image-20231112144706735" /></li>
+<li>属性对话框设置位置坐标及大小尺寸<img src="./image-20231112145035444.png" alt="image-20231112145035444" /></li>
+</ul>
+<h2 id="属性对话框"><a class="markdownIt-Anchor" href="#属性对话框"></a> 属性对话框</h2>
+<p><img src="./image-20231112145522128.png" alt="image-20231112145522128" /></p>
+<ul>
+<li><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>Name</mtext></mrow><annotation encoding="application/x-tex">\text{Name}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord text"><span class="mord">Name</span></span></span></span></span> ： 物体的名称。</li>
+<li><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>Material</mtext></mrow><annotation encoding="application/x-tex">\text{Material}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord text"><span class="mord">Material</span></span></span></span></span> ： 物体的材料属性。<img src="./image-20231112145628252.png" alt="image-20231112145628252" /><img src="./image-20231112145648402.png" alt="image-20231112145648402" /></li>
+<li><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>Solve Inside</mtext></mrow><annotation encoding="application/x-tex">\text{Solve Inside}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord text"><span class="mord">Solve Inside</span></span></span></span></span> ：物体内部场的分析。对于介质材料需要分析内部场，而良导体不需要。</li>
+<li><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>Orientation</mtext></mrow><annotation encoding="application/x-tex">\text{Orientation}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord text"><span class="mord">Orientation</span></span></span></span></span> ：创建物体的默认参考方向。</li>
+<li><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>Model</mtext></mrow><annotation encoding="application/x-tex">\text{Model}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord text"><span class="mord">Model</span></span></span></span></span> ：值为 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn></mrow><annotation encoding="application/x-tex">1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span> 表示为实体物体，值为 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>0</mn></mrow><annotation encoding="application/x-tex">0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">0</span></span></span></span> 表示其并非实体物体。</li>
+<li><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>Display Wireframe</mtext></mrow><annotation encoding="application/x-tex">\text{Display Wireframe}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord text"><span class="mord">Display Wireframe</span></span></span></span></span> ：物体的显示方式。值为 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>0</mn></mrow><annotation encoding="application/x-tex">0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">0</span></span></span></span> 以实体的方式显示，值为  <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn></mrow><annotation encoding="application/x-tex">1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span> 以边框的方式显示。</li>
+<li><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>Material Appearance</mtext></mrow><annotation encoding="application/x-tex">\text{Material Appearance}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord text"><span class="mord">Material Appearance</span></span></span></span></span> ：采用具有材料特性的外形。</li>
+<li><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>Color</mtext></mrow><annotation encoding="application/x-tex">\text{Color}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord text"><span class="mord">Color</span></span></span></span></span> ：物体的颜色。</li>
+<li><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>Transparant</mtext></mrow><annotation encoding="application/x-tex">\text{Transparant}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8777699999999999em;vertical-align:-0.19444em;"></span><span class="mord text"><span class="mord">Transparant</span></span></span></span></span> ：物体的透明度。</li>
+</ul>
+<p><img src="./image-20231112152945369.png" alt="image-20231112152945369" /></p>
+<p>可以在 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>Lines</mtext></mrow><annotation encoding="application/x-tex">\text{Lines}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord text"><span class="mord">Lines</span></span></span></span></span> 下找到一维的线模型，在 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>Sheets</mtext></mrow><annotation encoding="application/x-tex">\text{Sheets}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord text"><span class="mord">Sheets</span></span></span></span></span> 下找到二维的面模型，在 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>Solids</mtext></mrow><annotation encoding="application/x-tex">\text{Solids}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord text"><span class="mord">Solids</span></span></span></span></span> 下找到三维模型。</p>
+<h2 id="螺旋结构-texthelix"><a class="markdownIt-Anchor" href="#螺旋结构-texthelix"></a> 螺旋结构 (<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>Helix</mtext></mrow><annotation encoding="application/x-tex">\text{Helix}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord text"><span class="mord">Helix</span></span></span></span></span>)</h2>
+<p>创建螺旋结构的操作需要选中一维线模型或者二维平面模型后才能激活，软件以选中的线模型或者面模型为横截面，沿着指定的方向螺旋盘升生成螺旋结构模型，模型底圈的半径是设定的方向矢量到选中的线模型/面模型中心的距离；选中一维线模型生成的是中空的螺旋体，选中二维平面模型生成的是实心的螺旋体。</p>
+<p><img src="./image-20231112154255973.png" alt="image-20231112154255973" /></p>
+<p><img src="./image-20231112154320861.png" alt="image-20231112154320861" /></p>
+<h2 id="通过-textsweep-生成模型"><a class="markdownIt-Anchor" href="#通过-textsweep-生成模型"></a> 通过 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>Sweep</mtext></mrow><annotation encoding="application/x-tex">\text{Sweep}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8777699999999999em;vertical-align:-0.19444em;"></span><span class="mord text"><span class="mord">Sweep</span></span></span></span></span> 生成模型</h2>
+<p><img src="./image-20231112191244573.png" alt="image-20231112191244573" /></p>
+<h1 id="物体的材料属性"><a class="markdownIt-Anchor" href="#物体的材料属性"></a> 物体的材料属性</h1>
+<ul>
+<li>各项同性材料：
+<ul>
+<li>相对介电常数</li>
+<li>相对磁导率</li>
+<li>电导率</li>
+<li>介质损耗正切</li>
+<li>磁损耗正切</li>
+</ul>
+</li>
+<li>各项异性材料</li>
+<li>铁氧体材料
+<ul>
+<li>磁饱和度</li>
+<li>朗德因子</li>
+<li>磁共振线宽</li>
+</ul>
+</li>
+</ul>
+<h2 id="编辑材料属性"><a class="markdownIt-Anchor" href="#编辑材料属性"></a> 编辑材料属性</h2>
+<p><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>Tools &gt; Edit Libraries &gt; Materials &gt; Add Material...</mtext></mrow><annotation encoding="application/x-tex">\text{Tools &gt; Edit Libraries &gt; Materials &gt; Add Material...}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.73354em;vertical-align:-0.0391em;"></span><span class="mord text"><span class="mord">Tools &gt; Edit Libraries &gt; Materials &gt; Add Material...</span></span></span></span></span><br />
+<img src="./image-20231112174238041.png" alt="image-20231112174238041" /><br />
+<img src="./image-20231112174438049.png" alt="image-20231112174438049" /></p>
+<p>将 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>Type</mtext></mrow><annotation encoding="application/x-tex">\text{Type}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8777699999999999em;vertical-align:-0.19444em;"></span><span class="mord text"><span class="mord">Type</span></span></span></span></span> 属性修改为 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>Anisotropic</mtext></mrow><annotation encoding="application/x-tex">\text{Anisotropic}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8777699999999999em;vertical-align:-0.19444em;"></span><span class="mord text"><span class="mord">Anisotropic</span></span></span></span></span> 后可以修改各向异性材料的属性。</p>
+<p><img src="./image-20231112174530678.png" alt="image-20231112174530678" /></p>
+<p>可以看见还有 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>Tensor</mtext></mrow><annotation encoding="application/x-tex">\text{Tensor}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord text"><span class="mord">Tensor</span></span></span></span></span> 和 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>Nonelinear</mtext></mrow><annotation encoding="application/x-tex">\text{Nonelinear}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord text"><span class="mord">Nonelinear</span></span></span></span></span> ，分别表示可以以 张量 和 非线性函数 的形式修改这个参数的特性。</p>
+<p><img src="./image-20231112175027932.png" alt="image-20231112175027932" /></p>
+<p><img src="./image-20231112175041292.png" alt="image-20231112175041292" /></p>
+<p>但是一般来说用不到这两个选项。</p>
+<h2 id="默认材料"><a class="markdownIt-Anchor" href="#默认材料"></a> 默认材料</h2>
+<p><img src="./image-20231112175500482.png" alt="image-20231112175500482" /></p>
+<p>红框中的部分为建模时的默认材料，可以修改此选项。</p>
+<h1 id="鼠标的移动模式"><a class="markdownIt-Anchor" href="#鼠标的移动模式"></a> 鼠标的移动模式</h1>
+<p><img src="./image-20231112175850090.png" alt="image-20231112175850090" /></p>
+<p><img src="./image-20231112175937953.png" alt="image-20231112175937953" /></p>
+<h2 id="textsnap-mode"><a class="markdownIt-Anchor" href="#textsnap-mode"></a> <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>Snap Mode</mtext></mrow><annotation encoding="application/x-tex">\text{Snap Mode}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord text"><span class="mord">Snap Mode</span></span></span></span></span></h2>
+<p><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>Modeler &gt; Snap Mode</mtext></mrow><annotation encoding="application/x-tex">\text{Modeler &gt; Snap Mode}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord text"><span class="mord">Modeler &gt; Snap Mode</span></span></span></span></span></p>
+<p><img src="./image-20231112180139788.png" alt="image-20231112180139788" /></p>
+<p>快捷方式中的图标：      <img src="./image-20231112180354359.png" alt="image-20231112180354359" /></p>
+<h1 id="改变视图操作和显示隐藏物体模型"><a class="markdownIt-Anchor" href="#改变视图操作和显示隐藏物体模型"></a> 改变视图操作和显示/隐藏物体模型</h1>
+<p><img src="./image-20231112180849545.png" alt="image-20231112180849545" /></p>
+<p><img src="./image-20231112180947103.png" alt="image-20231112180947103" /></p>
+<p><img src="./image-20231112181139190.png" alt="image-20231112181139190" /><img src="./image-20231112181148390.png" alt="image-20231112181148390" /></p>
+<p>还有按住 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>Alt</mtext></mrow><annotation encoding="application/x-tex">\text{Alt}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord text"><span class="mord">Alt</span></span></span></span></span> 按键在下图中的九个点位双击可以查看系统的预设视角。![屏幕截图 2023-11-12 181427](./屏幕截图 2023-11-12 181427.png)</p>
+<h1 id="选择操作"><a class="markdownIt-Anchor" href="#选择操作"></a> 选择操作</h1>
+<p><img src="./image-20231112182302642.png" alt="image-20231112182302642" /></p>
+<p>可以选择物体、表面、棱边、顶点或者上述三种的任意一种。</p>
+<p>若像选中被遮挡的面，可以考虑旋转视图或者选中靠近的面，然后 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>Ctrl+B</mtext></mrow><annotation encoding="application/x-tex">\text{Ctrl+B}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.77777em;vertical-align:-0.08333em;"></span><span class="mord text"><span class="mord">Ctrl+B</span></span></span></span></span>。</p>
+<h1 id="物体模型的几何变换"><a class="markdownIt-Anchor" href="#物体模型的几何变换"></a> 物体模型的几何变换</h1>
+<h2 id="基础变换"><a class="markdownIt-Anchor" href="#基础变换"></a> 基础变换</h2>
+<p><img src="./image-20231112190058383.png" alt="image-20231112190058383" /></p>
+<p>图中圈出的1、2、3分别为图形的移动、复制、以及多个图形的布尔操作。</p>
+<p>改变模型尺寸：<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>Edit&gt;Scale</mtext></mrow><annotation encoding="application/x-tex">\text{Edit&gt;Scale}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.73354em;vertical-align:-0.0391em;"></span><span class="mord text"><span class="mord">Edit&gt;Scale</span></span></span></span></span> ，该操作同时影响对象的坐标和尺寸大小。</p>
+<p><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>Edit&gt;Arrange&gt;Offset</mtext></mrow><annotation encoding="application/x-tex">\text{Edit&gt;Arrange&gt;Offset}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord text"><span class="mord">Edit&gt;Arrange&gt;Offset</span></span></span></span></span> ，对三个维度的长度同时进行修改。</p>
+<p><img src="./image-20231112190625169.png" alt="image-20231112190625169" /></p>
+<h2 id="布尔运算"><a class="markdownIt-Anchor" href="#布尔运算"></a> 布尔运算</h2>
+<blockquote>
+<p>几个基础的就不提了。</p>
+</blockquote>
+<h2 id="textsplit"><a class="markdownIt-Anchor" href="#textsplit"></a> <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>Split</mtext></mrow><annotation encoding="application/x-tex">\text{Split}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord text"><span class="mord">Split</span></span></span></span></span></h2>
+<p><img src="./image-20231112191644684.png" alt="image-20231112191644684" /></p>
+<h2 id="textimprint"><a class="markdownIt-Anchor" href="#textimprint"></a> <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>Imprint</mtext></mrow><annotation encoding="application/x-tex">\text{Imprint}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8777699999999999em;vertical-align:-0.19444em;"></span><span class="mord text"><span class="mord">Imprint</span></span></span></span></span></h2>
+<p><img src="./image-20231112191948822.png" alt="image-20231112191948822" /></p>
+<p>将 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>Tool Part</mtext></mrow><annotation encoding="application/x-tex">\text{Tool Part}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord text"><span class="mord">Tool Part</span></span></span></span></span>  的部分投影到 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>Blank Part</mtext></mrow><annotation encoding="application/x-tex">\text{Blank Part}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord text"><span class="mord">Blank Part</span></span></span></span></span> 的表面。</p>
+<p><img src="./image-20231112192132850.png" alt="image-20231112192132850" /></p>
+<h1 id="texthfss-中的坐标系"><a class="markdownIt-Anchor" href="#texthfss-中的坐标系"></a> <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>HFSS</mtext></mrow><annotation encoding="application/x-tex">\text{HFSS}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord text"><span class="mord">HFSS</span></span></span></span></span> 中的坐标系</h1>
+<blockquote>
+<p>这部分的内容主要针对 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>HFSS</mtext></mrow><annotation encoding="application/x-tex">\text{HFSS}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord text"><span class="mord">HFSS</span></span></span></span></span> 设计中局部坐标系的设计。</p>
+</blockquote>
+<p><img src="./image-20231112192342890.png" alt="image-20231112192342890" /><br />
+<img src="./image-20231112192430875.png" alt="image-20231112192430875" /></p>
+<p>工作树下的相对坐标系设置。<img src="./image-20231112192611679.png" alt="image-20231112192611679" /></p>
+<h2 id="面坐标系"><a class="markdownIt-Anchor" href="#面坐标系"></a> 面坐标系：</h2>
+<p>选中一个面，并确定 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>x,y</mtext></mrow><annotation encoding="application/x-tex">\text{x,y}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord text"><span class="mord">x,y</span></span></span></span></span> 轴的方向。</p>
+<p><img src="./image-20231112193425563.png" alt="image-20231112193425563" /></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/stpguy/tags/HFSS%E5%85%A5%E9%97%A8/" rel="tag"># HFSS入门</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/stpguy/2023/11/07/%E5%BE%AE%E6%B3%A2%E5%B7%A5%E7%A8%8B%E7%AC%94%E8%AE%B0/" rel="prev" title="微波工程笔记">
+                  <i class="fa fa-angle-left"></i> 微波工程笔记
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/stpguy/2023/11/12/HFSS%E4%B8%AD%E7%9A%84%E8%BE%B9%E7%95%8C%E6%9D%A1%E4%BB%B6/" rel="next" title="HFSS中的边界条件">
+                  HFSS中的边界条件 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Monique</span>
+  </div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+  <a href="https://github.com/stpguy" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+</body>
+</html>
