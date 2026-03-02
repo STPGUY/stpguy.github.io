@@ -55,8 +55,7 @@
 
   
   <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous" defer></script>
-<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script><script src="/js/bookmark.js" defer></script><script src="/js/pjax.js" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script><script src="/js/bookmark.js" defer></script>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
 <script src="/js/third-party/search/local-search.js" defer></script>
@@ -79,7 +78,8 @@
 
   
 
-  <script class="next-config" data-name="enableMath" type="application/json">false</script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css" integrity="sha256-UF1fgpAiu3tPJN/uCqEUHNe7pnr+QR0SQDNfgglgtcM=" crossorigin="anonymous">
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js" defer></script>
 
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/3.0.1/quicklink.umd.js" integrity="sha256-44BednzIpUeQJcY8qtLyarFu0UCCTbgmWOvaoehiFQQ=" crossorigin="anonymous" defer></script>
@@ -206,7 +206,7 @@ p.spoiler {
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#part-one"><span class="nav-number">1.</span> <span class="nav-text"> Part One</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#high-light"><span class="nav-number">2.</span> <span class="nav-text"> HIGH LIGHT</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#something-i-wanna-say"><span class="nav-number">3.</span> <span class="nav-text"> Something I Wanna Say</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#part-one"><span class="nav-number">1.</span> <span class="nav-text">Part One</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#high-light"><span class="nav-number">2.</span> <span class="nav-text">HIGH LIGHT</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#something-i-wanna-say"><span class="nav-number">3.</span> <span class="nav-text">Something I Wanna Say</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -352,8 +352,12 @@ p.spoiler {
     
     
     
-    <div class="post-body" itemprop="articleBody"><h1 id="part-one"><a class="markdownIt-Anchor" href="#part-one"></a> Part One</h1>
+    <div class="post-body" itemprop="articleBody"><h1 id="part-one">Part One</h1>
 <table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
 <thead>
 <tr>
 <th>TV 版</th>
@@ -363,7 +367,8 @@ p.spoiler {
 <tbody>
 <tr>
 <td>001 云霄飞车杀人事件</td>
-<td>（黑衣组织—琴酒 、伏特加出场，工藤新一喝下 APTX4869变小。 大幕拉开）</td>
+<td>（黑衣组织—琴酒 、伏特加出场，工藤新一喝下 APTX4869变小。
+大幕拉开）</td>
 </tr>
 <tr>
 <td>002 董事长千金诱拐事件</td>
@@ -495,7 +500,8 @@ p.spoiler {
 </tr>
 <tr>
 <td>310 工藤新一的纽约事件 （解决篇）</td>
-<td>（贝尔摩德扮成杀人魔登场，赤井秀一对其进行追踪。兰得知赤井秀一是 FBI。）</td>
+<td>（贝尔摩德扮成杀人魔登场，赤井秀一对其进行追踪。兰得知赤井秀一是
+FBI。）</td>
 </tr>
 <tr>
 <td>311 光彦森林迷失记 上集</td>
@@ -535,7 +541,8 @@ p.spoiler {
 </tr>
 <tr>
 <td>361 东京现像所的秘密（后篇）</td>
-<td>（灰原被赤井秀一所派叼烟男子开车跟踪，赤井秀一最后 看着灰原照片说：但是，还真像啊）</td>
+<td>（灰原被赤井秀一所派叼烟男子开车跟踪，赤井秀一最后
+看着灰原照片说：但是，还真像啊）</td>
 </tr>
 <tr>
 <td>363 ～ 364 四辆保时捷</td>
@@ -551,7 +558,10 @@ p.spoiler {
 </tr>
 <tr>
 <td>371 ～ 375 与黑色组织面对面 满月之夜的两起神秘事件</td>
-<td>（茱蒂、 赤井、詹姆斯身份曝光，贝尔摩德扮成新出医生暴露，柯南得知 BOSS邮箱按键音，贝尔摩德称呼柯南为银色子弹，并期待他能击垮黑衣组织， 并对 GIN 隐藏了柯南就是工藤的事实， 从此可看出贝尔摩德和组织不寻常的关系）</td>
+<td>（茱蒂、 赤井、詹姆斯身份曝光，贝尔摩德扮成新出医生暴露，柯南得知
+BOSS邮箱按键音，贝尔摩德称呼柯南为银色子弹，并期待他能击垮黑衣组织，
+并对 GIN 隐藏了柯南就是工藤的事实，
+从此可看出贝尔摩德和组织不寻常的关系）</td>
 </tr>
 <tr>
 <td>392 ～ 393帝丹高中校园灵异事件</td>
@@ -559,7 +569,8 @@ p.spoiler {
 </tr>
 <tr>
 <td>405 ～ 406 星星与香烟的暗号</td>
-<td>（柯南听到山村警官给他奶奶打电话的按键音和贝尔摩的 给 Boss发简讯时的按键音相似，推测 boss 在鸟取县）</td>
+<td>（柯南听到山村警官给他奶奶打电话的按键音和贝尔摩的 给
+Boss发简讯时的按键音相似，推测 boss 在鸟取县）</td>
 </tr>
 <tr>
 <td>419 斯特拉迪瓦里小提琴的不和谐音 (前奏曲 )</td>
@@ -571,11 +582,13 @@ p.spoiler {
 </tr>
 <tr>
 <td>428 诡异宅院大冒险（封印篇）</td>
-<td>（柯南推理出 BOSS的邮箱号码，但灰原阻止柯南去调查这个号，并称之为“潘多拉之盒”）</td>
+<td>（柯南推理出
+BOSS的邮箱号码，但灰原阻止柯南去调查这个号，并称之为“潘多拉之盒”）</td>
 </tr>
 <tr>
 <td>459 ~ 463 黑色冲击 ! 组织之手逼近的瞬间</td>
-<td>（水无怜奈、基安蒂、科恩出场， GIN 开始怀疑毛利小五郎，赤井秀一称呼 GIN 为宿敌，水无怜奈出车祸后被 FBI抓获）</td>
+<td>（水无怜奈、基安蒂、科恩出场， GIN 开始怀疑毛利小五郎，赤井秀一称呼
+GIN 为宿敌，水无怜奈出车祸后被 FBI抓获）</td>
 </tr>
 <tr>
 <td>467 无法回头的两人 (前篇 )</td>
@@ -591,7 +604,9 @@ p.spoiler {
 </tr>
 <tr>
 <td>538 ~ 551 红与黑的碰撞</td>
-<td>（此系列讲： GIN 用计将水无怜奈从赤井秀一手中夺回）（第二次对决，赤井秀一疑似牺牲，水无怜奈 CIA身份遭到组织怀疑）</td>
+<td>（此系列讲： GIN
+用计将水无怜奈从赤井秀一手中夺回）（第二次对决，赤井秀一疑似牺牲，水无怜奈
+CIA身份遭到组织怀疑）</td>
 </tr>
 <tr>
 <td>554 ～ 555 卡拉 OK包房的死角（后篇）</td>
@@ -619,7 +634,8 @@ p.spoiler {
 </tr>
 <tr>
 <td>630 黑与 13 的暗示</td>
-<td>（疑似秀一的男子和冲矢昴同时出现， 局势再次混乱， 赤井秀一身份再次遭人怀疑）</td>
+<td>（疑似秀一的男子和冲矢昴同时出现， 局势再次混乱，
+赤井秀一身份再次遭人怀疑）</td>
 </tr>
 <tr>
 <td>631 步步逼近的黑色期限</td>
@@ -627,7 +643,10 @@ p.spoiler {
 </tr>
 <tr>
 <td>632 摇曳的红色目标</td>
-<td>（琴酒准备让基安蒂对疑似 赤井秀一的人进行狙击但并未成功，后来得知贝尔摩德通知后， GIN 主动放弃，还笑着说： “真是独断专行， 他还是那么让我不爽。 ……真希望他只是小说中的人物， 像夏洛克福尔摩 斯那样的侦探” )</td>
+<td>（琴酒准备让基安蒂对疑似
+赤井秀一的人进行狙击但并未成功，后来得知贝尔摩德通知后， GIN
+主动放弃，还笑着说： “真是独断专行， 他还是那么让我不爽。
+……真希望他只是小说中的人物， 像夏洛克福尔摩 斯那样的侦探” )</td>
 </tr>
 <tr>
 <td>673 ～ 674 紧急事态 252 下集</td>
@@ -647,11 +666,14 @@ p.spoiler {
 </tr>
 <tr>
 <td>702 ～ 703 柯南 VS平次东西侦探推理对决 上集</td>
-<td>（ FBI的茱蒂、卡迈尔等人对世良有似曾相识的感觉。詹姆斯则一眼就认出世良是女生，显得更加可疑）</td>
+<td>（
+FBI的茱蒂、卡迈尔等人对世良有似曾相识的感觉。詹姆斯则一眼就认出世良是女生，显得更加可疑）</td>
 </tr>
 <tr>
 <td>708 ～ 709 博士的影音网站</td>
-<td>（世良她对灰原有很大兴趣。并对着冲矢昴的窗户说： “我还以为是谁随随便便地住进来了呢， 不过现在看起来真是杞人忧天了啊……” 最后世良将视频中意外拍到的灰原影像在电脑中删除。）</td>
+<td>（世良她对灰原有很大兴趣。并对着冲矢昴的窗户说：
+“我还以为是谁随随便便地住进来了呢， 不过现在看起来真是杞人忧天了啊……”
+最后世良将视频中意外拍到的灰原影像在电脑中删除。）</td>
 </tr>
 <tr>
 <td>719 ～ 720 婚礼前夕（前篇）</td>
@@ -663,11 +685,14 @@ p.spoiler {
 </tr>
 <tr>
 <td>726 侦探们的夜想曲（波本）</td>
-<td>（简单的案件引出了波本，安室透、世良真纯、冲矢昴他们 互相见面，最后苦艾酒给波本打电话，安室透，冲矢昴，世良真纯同时接到电话，说明以上人中有一个就是波本）</td>
+<td>（简单的案件引出了波本，安室透、世良真纯、冲矢昴他们
+互相见面，最后苦艾酒给波本打电话，安室透，冲矢昴，世良真纯同时接到电话，说明以上人中有一个就是波本）</td>
 </tr>
 <tr>
 <td>727 ～ 728 一丁点都不原谅（前篇）</td>
-<td>（里边提到了上集的一些内容，让灰原哀想到了冲矢昴和诸星大 {也就是赤井秀一 }有某方面的联系，暗示出冲矢昴有可能是赤井秀一假扮的，赤井秀一是没有死的）</td>
+<td>（里边提到了上集的一些内容，让灰原哀想到了冲矢昴和诸星大
+{也就是赤井秀一
+}有某方面的联系，暗示出冲矢昴有可能是赤井秀一假扮的，赤井秀一是没有死的）</td>
 </tr>
 <tr>
 <td>733 ～ 735 以性命为赌注的恋爱转播（转播开始）</td>
@@ -687,7 +712,8 @@ p.spoiler {
 </tr>
 <tr>
 <td>751 ～ 752 迫近灰原秘密的黑影</td>
-<td>（安室透， 冲矢昂， 世良纯真无意间都见到了变大后的雪莉， 冲矢昂喝波本酒。为下文埋伏笔）</td>
+<td>（安室透， 冲矢昂， 世良纯真无意间都见到了变大后的雪莉，
+冲矢昂喝波本酒。为下文埋伏笔）</td>
 </tr>
 <tr>
 <td>753 ～ 756 漆黑的神秘列车</td>
@@ -703,11 +729,13 @@ p.spoiler {
 </tr>
 <tr>
 <td>776 ～ 777 怪盗基德与赤面人鱼</td>
-<td>（怪盗基德知道世良是女生，世良暴露出来自己对自己 的帽子很重视，暗示了世良和赤井秀一的关系）</td>
+<td>（怪盗基德知道世良是女生，世良暴露出来自己对自己
+的帽子很重视，暗示了世良和赤井秀一的关系）</td>
 </tr>
 <tr>
 <td>779 ～ 780 装满水果的宝箱（后篇）</td>
-<td>（小兰回忆起自己之前好像见过世良，看见世良的背影能想 起波浪，最后世良表示在时机成熟时会告诉柯南自己什么时候与柯南见过）</td>
+<td>（小兰回忆起自己之前好像见过世良，看见世良的背影能想
+起波浪，最后世良表示在时机成熟时会告诉柯南自己什么时候与柯南见过）</td>
 </tr>
 <tr>
 <td>786 ～ 787 朱蒂的追忆与赏花的陷阱</td>
@@ -719,7 +747,8 @@ p.spoiler {
 </tr>
 <tr>
 <td>793 小兰也倒在了浴室里了（前篇）</td>
-<td>（柯南知道了波本和贝尔摩德合作调查茱蒂的事情， 波本疑似发现雪莉假死的事情）</td>
+<td>（柯南知道了波本和贝尔摩德合作调查茱蒂的事情，
+波本疑似发现雪莉假死的事情）</td>
 </tr>
 <tr>
 <td>794 小兰也倒在了浴室了（后篇）</td>
@@ -735,11 +764,14 @@ p.spoiler {
 </tr>
 <tr>
 <td>812 结局惊人的恋爱小说 (前篇 )</td>
-<td>（知道世良母亲一直在美国，在日本除了 2 个哥哥没有一个亲戚了，柯南见到了“领域外的妹妹”）</td>
+<td>（知道世良母亲一直在美国，在日本除了 2
+个哥哥没有一个亲戚了，柯南见到了“领域外的妹妹”）</td>
 </tr>
 <tr>
 <td>813 结局惊人的恋爱小说 (后篇 )</td>
-<td>（“领域外的妹妹”调查柯南的眼镜架，说：这个窃听器，是我从来没见过的类型呢。 说明她见过很多这种发明， 怀疑她也吃了变小的药， 并开始对柯南感兴趣，并对世良说，以后柯南问起自己，就说自己是“领域外的妹妹”）</td>
+<td>（“领域外的妹妹”调查柯南的眼镜架，说：这个窃听器，是我从来没见过的类型呢。
+说明她见过很多这种发明， 怀疑她也吃了变小的药，
+并开始对柯南感兴趣，并对世良说，以后柯南问起自己，就说自己是“领域外的妹妹”）</td>
 </tr>
 <tr>
 <td>823 气氛僵硬的茶会 前篇</td>
@@ -755,7 +787,8 @@ p.spoiler {
 </tr>
 <tr>
 <td>833 绯色的追求</td>
-<td>（波本对 FBI 说出：从我们的日本离开。柯南怀疑波本是公安警察，卡迈尔暴露了楠田陆道自杀的消息）</td>
+<td>（波本对 FBI
+说出：从我们的日本离开。柯南怀疑波本是公安警察，卡迈尔暴露了楠田陆道自杀的消息）</td>
 </tr>
 <tr>
 <td>834 绯色的交错</td>
@@ -767,23 +800,29 @@ p.spoiler {
 </tr>
 <tr>
 <td>836 绯色的真相</td>
-<td>（波本公安警察身份公布，波本真实名字降谷零暴露，冲矢昂真实身份赤 井秀一公布，但在组织内未暴露，同时赤井秀一对波本说：至今对他的事情扔感抱歉，柯南知道新人物 -在琴酒之上的人物朗姆 RUM 出场）</td>
+<td>（波本公安警察身份公布，波本真实名字降谷零暴露，冲矢昂真实身份赤
+井秀一公布，但在组织内未暴露，同时赤井秀一对波本说：至今对他的事情扔感抱歉，柯南知道新人物
+-在琴酒之上的人物朗姆 RUM 出场）</td>
 </tr>
 <tr>
 <td>838 太阁之恋的名人战上</td>
-<td>（领妹和冲矢昴都对羽田秀吉夺冠感到高兴，而世良真纯却说领 妹的反应“好恶心”）</td>
+<td>（领妹和冲矢昴都对羽田秀吉夺冠感到高兴，而世良真纯却说领
+妹的反应“好恶心”）</td>
 </tr>
 <tr>
 <td>840 盛夏里沉入泳池的迷 上</td>
-<td>（“领域外的妹妹”说出要测试柯南，要谨慎行事，还说如果 不符合她的期待，她们就必须尽快离开这儿，去寻找新的根据地。声音明显老气）</td>
+<td>（“领域外的妹妹”说出要测试柯南，要谨慎行事，还说如果
+不符合她的期待，她们就必须尽快离开这儿，去寻找新的根据地。声音明显老气）</td>
 </tr>
 <tr>
 <td>841 盛夏里沉入泳池的迷 下</td>
-<td>（兰回忆自己也见过“领域外的妹妹”，同时回忆起世良纯真 小时侯说过：你是魔法师吧。说明兰和小世良和“领域外的妹妹”之间都有关系）</td>
+<td>（兰回忆自己也见过“领域外的妹妹”，同时回忆起世良纯真
+小时侯说过：你是魔法师吧。说明兰和小世良和“领域外的妹妹”之间都有关系）</td>
 </tr>
 <tr>
 <td>845 三名第一发现人 上</td>
-<td>（新人物 RUM 出场，在 GIN 之上的人物，长相又像是老人又像是长发哥哥又像是大汉）</td>
+<td>（新人物 RUM 出场，在 GIN
+之上的人物，长相又像是老人又像是长发哥哥又像是大汉）</td>
 </tr>
 <tr>
 <td>846 三名第一发现人 下</td>
@@ -791,7 +830,8 @@ p.spoiler {
 </tr>
 <tr>
 <td>865 县警的黑暗（前篇）</td>
-<td>（啄木鸟事件，柯南发现大和警官有朗姆特征，还有黑田警官， 也被人评论“像某个组织的 BOSS”）</td>
+<td>（啄木鸟事件，柯南发现大和警官有朗姆特征，还有黑田警官，
+也被人评论“像某个组织的 BOSS”）</td>
 </tr>
 <tr>
 <td>868 悄悄靠近安室的黑影</td>
@@ -843,9 +883,10 @@ p.spoiler {
 </tr>
 </tbody>
 </table>
-<h1 id="high-light"><a class="markdownIt-Anchor" href="#high-light"></a> HIGH LIGHT</h1>
-<iframe src="//player.bilibili.com/player.html?aid=802604477&bvid=BV1Ay4y147Hs&cid=325082181&page=1&high_quality=1&danmaku=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"style="width: 100%; height: 500px; max-width: 100%；align:center; padding:20px 0;"> </iframe>
-<h1 id="something-i-wanna-say"><a class="markdownIt-Anchor" href="#something-i-wanna-say"></a> Something I Wanna Say</h1>
+<h1 id="high-light">HIGH LIGHT</h1>
+<iframe src="//player.bilibili.com/player.html?aid=802604477&amp;bvid=BV1Ay4y147Hs&amp;cid=325082181&amp;page=1&amp;high_quality=1&amp;danmaku=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" style="width: 100%; height: 500px; max-width: 100%；align:center; padding:20px 0;">
+</iframe>
+<h1 id="something-i-wanna-say">Something I Wanna Say</h1>
 <p>柯南剧场版（TV版）在某种程度上讲，淡化了本应着重刻画的推理情节、柯南的人物特色，而加重的武打片的成份，有刻意博得观众眼球的嫌疑。这也是快餐文欢的一种表现，希望柯南能够重新回到曾经推理严密、人物特色鲜明的时代，再创动漫的巅峰。</p>
 
     </div>

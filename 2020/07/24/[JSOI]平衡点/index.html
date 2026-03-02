@@ -55,8 +55,7 @@
 
   
   <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous" defer></script>
-<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script><script src="/js/bookmark.js" defer></script><script src="/js/pjax.js" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script><script src="/js/bookmark.js" defer></script>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
 <script src="/js/third-party/search/local-search.js" defer></script>
@@ -79,7 +78,8 @@
 
   
 
-  <script class="next-config" data-name="enableMath" type="application/json">false</script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css" integrity="sha256-UF1fgpAiu3tPJN/uCqEUHNe7pnr+QR0SQDNfgglgtcM=" crossorigin="anonymous">
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js" defer></script>
 
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/3.0.1/quicklink.umd.js" integrity="sha256-44BednzIpUeQJcY8qtLyarFu0UCCTbgmWOvaoehiFQQ=" crossorigin="anonymous" defer></script>
@@ -206,7 +206,8 @@ p.spoiler {
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#jsoi2004%E5%B9%B3%E8%A1%A1%E7%82%B9-%E5%90%8A%E6%89%93xxx"><span class="nav-number">1.</span> <span class="nav-text"> [JSOI2004]平衡点 &#x2F; 吊打XXX</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#code"><span class="nav-number">1.1.</span> <span class="nav-text"> Code</span></a></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#jsoi2004%E5%B9%B3%E8%A1%A1%E7%82%B9-%E5%90%8A%E6%89%93xxx"><span class="nav-number">1.</span> <span class="nav-text">[JSOI2004]平衡点 &#x2F;
+吊打XXX</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#code"><span class="nav-number">1.1.</span> <span class="nav-text">Code</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -361,16 +362,24 @@ p.spoiler {
     
     
     
-    <div class="post-body" itemprop="articleBody"><h1 id="jsoi2004平衡点-吊打xxx"><a class="markdownIt-Anchor" href="#jsoi2004平衡点-吊打xxx"></a> <a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P1337">[JSOI2004]平衡点 / 吊打XXX</a></h1>
+    <div class="post-body" itemprop="articleBody"><h1 id="jsoi2004平衡点-吊打xxx"><a
+target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P1337">[JSOI2004]平衡点 /
+吊打XXX</a></h1>
 <p>被吊打了啊 !</p>
-<p><s>这道题, 看上去真的挺难的 .</s></p>
+<p><del>这道题, 看上去真的挺难的 .</del></p>
 <p>简言之, 就是求平衡状态时, 中心点的位置 .</p>
-<p>做出受力分析图, 我们可以看得出来, 这个点的位置, 其实与绳子是无关的, 每根绳的拉力, 也一定是等于重物的</p>
-<p>所以, 我们可以先随机一个点, 求出这<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathnormal">n</span></span></span></span>根线对着个点的作用力的合力. 因为力的方向不好表示, 所以我们可以正交分解, 将力分解到<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathnormal">x</span></span></span></span>轴和<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>y</mi></mrow><annotation encoding="application/x-tex">y</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">y</span></span></span></span>轴上去.</p>
+<p>做出受力分析图, 我们可以看得出来, 这个点的位置, 其实与绳子是无关的,
+每根绳的拉力, 也一定是等于重物的</p>
+<p>所以, 我们可以先随机一个点, 求出这<span
+class="math inline">\(n\)</span>根线对着个点的作用力的合力.
+因为力的方向不好表示, 所以我们可以正交分解, 将力分解到<span
+class="math inline">\(x\)</span>轴和<span
+class="math inline">\(y\)</span>轴上去.</p>
 <p>这个点必定会沿合力方向移动一定的距离, 直到合力为零.</p>
-<p>但是, 我们在不用其他数学工具的情况下, 我们可以随机一个较大步长, 然后不断地缩小这个步长, 就可以越来越接近这个目标点了.</p>
+<p>但是, 我们在不用其他数学工具的情况下, 我们可以随机一个较大步长,
+然后不断地缩小这个步长, 就可以越来越接近这个目标点了.</p>
 <p>当某一次的移动前后的变化小于精度范围时, 那么我们就找到答案了.</p>
-<h2 id="code"><a class="markdownIt-Anchor" href="#code"></a> Code</h2>
+<h2 id="code">Code</h2>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="type">const</span> <span class="type">int</span> Maxn = <span class="number">1005</span>;</span><br><span class="line"><span class="type">int</span> N;</span><br><span class="line"><span class="type">double</span> X, Y;</span><br><span class="line"><span class="function"><span class="type">bool</span> <span class="title">Xf</span><span class="params">(<span class="number">1</span>)</span>, <span class="title">Yf</span><span class="params">(<span class="number">1</span>)</span></span>;</span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">Node</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">int</span> X, Y, G;</span><br><span class="line">&#125;Points[Maxn];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="type">void</span> <span class="title">Solve</span><span class="params">(<span class="type">double</span> M)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="function"><span class="type">double</span> <span class="title">x</span><span class="params">(<span class="number">0</span>)</span>, <span class="title">y</span><span class="params">(<span class="number">0</span>)</span>, Temp</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= N; ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        Temp = <span class="built_in">sqrt</span>((X - Points[i].X) * (X - Points[i].X) + (Y - Points[i].Y) * (Y - Points[i].Y));</span><br><span class="line">        <span class="keyword">if</span> (!Temp) <span class="keyword">continue</span>;</span><br><span class="line">        x += Points[i].G / Temp * (Points[i].X - X);</span><br><span class="line">        y += Points[i].G / Temp * (Points[i].Y - Y);</span><br><span class="line">    &#125;</span><br><span class="line">    Temp = <span class="built_in">sqrt</span>(x * x + y * y);</span><br><span class="line">    Y += M / Temp * y;</span><br><span class="line">    X += M / Temp * x;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">scanf</span> (<span class="string">&quot;%d&quot;</span>, &amp;N);</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= N; ++i)</span><br><span class="line">        <span class="built_in">scanf</span> (<span class="string">&quot;%d %d %d&quot;</span>, &amp;Points[i].X, &amp;Points[i].Y, &amp;Points[i].G);</span><br><span class="line"></span><br><span class="line">    <span class="type">double</span> M = <span class="number">10000</span>, tx, ty;</span><br><span class="line">    <span class="keyword">while</span> (<span class="number">1</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        tx = X, ty = Y;</span><br><span class="line">        <span class="built_in">Solve</span>(M);</span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">abs</span>(tx - X) &lt; <span class="number">0.00001</span> &amp;&amp; <span class="built_in">abs</span>(ty - Y) &lt; <span class="number">0.00001</span>) <span class="keyword">break</span>;</span><br><span class="line">        M *= <span class="number">0.9</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">printf</span> (<span class="string">&quot;%.3lf %.3lf\n&quot;</span>, X, Y);</span><br><span class="line">    <span class="built_in">system</span> (<span class="string">&quot;pause&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
     </div>
